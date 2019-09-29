@@ -1,0 +1,8 @@
+
+remotes: 192.168.1.35
+
+project:
+    name: mydemo
+    repo: https://github.com/idlesign/mydemo
+    domain: mydemo.here
+    email: idlesign@yandex.ru
