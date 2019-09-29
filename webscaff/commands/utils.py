@@ -1,0 +1,76 @@
+from os import environ
+from pathlib import Path
+from uuid import uuid4
+
+from patchwork.transfers import rsync as rsync_patchwork
+from patchwork.files import append as append_to_file
+
+
+def echo(text):
+    """Echoes the text to stdout.
+
+    :param str text:
+
+    """
+    print(text)
+
+
+def link_config(ctx, *, title, name_local, name_remote, dir_remote_confs):
+
+    config_name = name_local
+    config_local = Path(ctx.paths.local.configs) / config_name
+
+    if config_local.exists():
+
+        ctx.sudo(get_symlink_command(
+            Path(ctx.paths.remote.configs) / config_name,
+            dir_remote_confs / name_remote))
+
+        return True
+
+    echo('No %s configuration. Expected: %s' % (title, config_local))
+
+    return False
+
+
+def rsync(ctx, *args, **kwargs):
+    """Ugly workaround for https://github.com/fabric/patchwork/issues/16."""
+    ssh_agent = environ.get('SSH_AUTH_SOCK', None)
+
+    if ssh_agent:
+        ctx.config.run.env['SSH_AUTH_SOCK'] = ssh_agent
+
+    return rsync_patchwork(ctx, *args, **kwargs)
+
+
+def cd_sudo(cd, command):
+    # https://github.com/pyinvoke/invoke/issues/459
+    return 'bash -c "cd %s && %s"' % (cd, command)
+
+
+def get_symlink_command(src, dest):
+    """Returns a symlink command.
+
+    :param src: Source filepath
+    :param dest: Link filepath
+
+    """
+    return 'ln -sf %s %s' % (src, dest)
+
+
+def make_tmp_file(ctx, contents):
+    """Makes a temporary file with the given content.
+    Returns filepath.
+
+    :param ctx:
+
+    :param str contents:
+
+    :rtype: str
+
+    """
+    fpath = '/tmp/wscf_%s' % uuid4()
+
+    append_to_file(ctx, fpath, contents)
+
+    return fpath
