@@ -64,6 +64,9 @@ class WebscaffConfig(Config):
         if not remote_runtime.reloader:
             remote_runtime.reloader = str(remote_runtime_dir / 'reloader')
 
+        if not remote_runtime.maintenance:
+            remote_runtime.maintenance = str(remote_runtime_dir / 'maintenance')
+
         if not remote_runtime.environ:
             remote_runtime.environ = str(remote_runtime_dir / 'environ')
 
@@ -116,6 +119,7 @@ class WebscaffConfig(Config):
                             'certbot': None,  # Certbot webroot dir
                             'spool': None,  # uWSGI spooler dir
                             'reloader': None,  # uWSGI touch reload file
+                            'maintenance': None,  # uWSGI maintenance trigger file
                             'environ': None,  # Project environ type file
                         },
                         'venv': {
