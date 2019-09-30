@@ -32,11 +32,13 @@ def maintenance_off(ctx):
 
 
 @contextmanager
-def maintenance_mode():
+def maintenance_mode(ctx):
     """Temporarily turn on maintenance mode."""
-    maintenance_on()
+
+    maintenance_on(ctx)
+
     try:
         yield
 
     finally:
-        maintenance_off()
+        maintenance_off(ctx)
