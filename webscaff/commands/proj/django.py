@@ -41,7 +41,7 @@ def create_superuser(ctx):
 
     email = ctx.project.email or ''
     if email:
-        command += '--email %s --username %s' % (email, email.partition('@')[0])
+        command += ' --email %s --username %s' % (email, email.partition('@')[0])
 
     manage(ctx, command)
 
