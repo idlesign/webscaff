@@ -21,7 +21,7 @@ def create_environ_file(ctx, type_marker='production'):
     :param str type_marker:
 
     """
-    append_to_file(ctx, ctx.paths.remote.runtime.environ, type_marker)
+    append_to_file(ctx, ctx.paths.remote.project.runtime.environ, type_marker)
 
 
 def symlink_home(ctx):
@@ -35,13 +35,7 @@ def upload_configs(ctx):
     source = ctx.paths.local.configs
 
     if Path(source).exists():
-
-        rsync(
-            ctx, source, ctx.paths.remote.configs,
-            delete=True,
-            exclude=[
-                ctx.paths.remote.environ_filename,
-            ])
+        rsync(ctx, source, ctx.paths.remote.configs, delete=True)
 
     else:
         echo('No configuration files uploaded. Expected: %s' % source)
