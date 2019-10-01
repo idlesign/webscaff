@@ -54,6 +54,6 @@ def test_defaults():
     assert remote_runtime.environ == '/srv/testme/runtime/environ'
 
     paths_local = paths.local
-    assert paths_local.configs.endswith('tests/conf'), paths_local.configs
-    assert paths_local.project.home.endswith('tests'), paths_local.project.home
-    assert paths_local.project.base.endswith('tests/testme'), paths_local.project.base
+    assert paths_local.configs.endswith('/conf')
+    assert paths_local.project.home.endswith('tests')
+    assert paths_local.project.base.endswith('tests/testme')
