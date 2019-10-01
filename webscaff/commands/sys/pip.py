@@ -27,7 +27,7 @@ def install(ctx, package='', update=False, from_req=False, editable=False):
         package = [package]
 
     with venv_context(ctx):
-        ctx.run('pip install %s %s' % (' '.join(flags), ' '.join(package)))
+        ctx.run('pip3 install %s %s' % (' '.join(flags), ' '.join(package)))
 
 
 @task
@@ -41,8 +41,7 @@ def install_vcs(ctx, package, vcs_path):
     """Installs python package(s) using pip from VCS
 
     :param str|list package: E.g.: sitetree
-    :param str vcs_path: E.g.:https://github.com/idlesign/sitetree/@branch
+    :param str vcs_path: E.g.: https://github.com/idlesign/sitetree/@branch
 
     """
-    with venv_context(ctx):
-        ctx.run('pip install -e git+%s#egg=%s' % (vcs_path, package))
+    install(ctx, 'git+%s#egg=%s' % (vcs_path, package), editable=True)
