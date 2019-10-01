@@ -43,12 +43,12 @@ def bootstrap(ctx):
     fs.create_environ_file(ctx)
 
     pg.bootstrap(ctx)
-    uwsgi.bootstrap(ctx)
 
     django.bootstrap(ctx)
     django.migrate(ctx)
     django.create_superuser(ctx)
 
+    uwsgi.bootstrap(ctx)
     service.bootstrap(ctx)
 
     certbot.get_certificate(ctx)
