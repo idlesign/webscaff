@@ -1,6 +1,5 @@
 from contextlib import contextmanager
 
-from invoke import task
 from patchwork.files import exists
 
 
@@ -26,4 +25,4 @@ def create(ctx, python_path):
         return
 
     # Call as module in case `virtualenv` app is not [yet] available.
-    ctx.run('python3 -m venv -p %s %s' % (python_path, project_venv))
+    ctx.run('%s -m venv %s' % (python_path, project_venv))
