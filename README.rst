@@ -2,7 +2,7 @@ webscaff
 ========
 https://github.com/idlesign/webscaff
 
-|release| |lic|
+|release| |lic| |ci| |lic|
 
 .. |release| image:: https://img.shields.io/pypi/v/webscaff.svg
     :target: https://pypi.python.org/pypi/webscaff
