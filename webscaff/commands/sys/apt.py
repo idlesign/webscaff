@@ -1,7 +1,5 @@
 from invoke import task
 
-from patchwork.packages import package
-
 
 BOOTSTRAP_SYSTEM_PACKAGES = [
     'python3-dev',
@@ -13,7 +11,7 @@ BOOTSTRAP_SYSTEM_PACKAGES = [
     'build-essential',
     'libjpeg-dev',  # for Pillow
     'libxml2-dev', 'libxslt1-dev',  # for lxml
-    'libpcre3-dev', 'libssl-dev'  # for uWSGI with SSL and routing support
+    'libpcre3-dev', 'libssl-dev',  # for uWSGI with SSL and routing support
 
     'git',
     'postgresql', 'libpq-dev',
@@ -57,7 +55,8 @@ def install(ctx, packages):
 
     update(ctx)
 
-    package(ctx, *packages)
+    for package in packages:
+        ctx.sudo('apt install -y %s' % package, env={'DEBIAN_FRONTEND': 'noninteractive'})
 
 
 @task
