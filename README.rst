@@ -10,6 +10,12 @@ https://github.com/idlesign/webscaff
 .. |lic| image:: https://img.shields.io/pypi/l/webscaff.svg
     :target: https://pypi.python.org/pypi/webscaff
 
+.. |ci| image:: https://img.shields.io/travis/idlesign/makeapp/master.svg
+    :target: https://travis-ci.org/idlesign/webscaff
+
+.. |coverage| image:: https://img.shields.io/coveralls/idlesign/makeapp/master.svg
+    :target: https://coveralls.io/r/idlesign/webscaff
+
 
 **Work in progress. Stay tuned.**
 
@@ -27,5 +33,3 @@ Documentation
 -------------
 
 http://webscaff.readthedocs.org/
-
-
