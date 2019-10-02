@@ -1,6 +1,12 @@
 from invoke import task
 
 
+@task
+def cat(ctx, path):
+    """Outputs file content."""
+    ctx.sudo('cat %s' % path)
+
+
 def mkdir(ctx, path):
     """Creates a directory."""
     ctx.sudo('mkdir -p %s' % path)
