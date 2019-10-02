@@ -41,6 +41,7 @@ class TestProj:
             'mydemo uwsgi_sysinit > /srv/mydemo/conf/mydemo.service',
             'systemctl enable /srv/mydemo/conf/mydemo.service',
             'systemctl start mydemo',
+            'mkdir -p /srv/mydemo/runtime/certbot',
             'certbot --agree-tos --no-eff-email --email idlesign@some.com certonly '
             '--webroot -d mydemo.here -w /srv/mydemo/runtime/certbot',
             'shutdown -r now',

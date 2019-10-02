@@ -49,8 +49,10 @@ def bootstrap(ctx):
     django.create_superuser(ctx)
 
     uwsgi.bootstrap(ctx)
+
     service.bootstrap(ctx)
 
+    certbot.bootstrap(ctx)
     certbot.get_certificate(ctx)
 
     sys_utils.reboot(ctx)

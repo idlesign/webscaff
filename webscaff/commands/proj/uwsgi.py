@@ -16,6 +16,7 @@ def bootstrap(ctx):
 
     # Create touch reload file.
     fs.touch(ctx, ctx.paths.remote.project.runtime.reloader)
+    # Add spooler directory.
     fs.mkdir(ctx, ctx.paths.remote.project.runtime.spool)
 
 
