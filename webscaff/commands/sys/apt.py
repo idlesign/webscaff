@@ -55,8 +55,7 @@ def install(ctx, packages):
 
     update(ctx)
 
-    for package in packages:
-        ctx.sudo('apt install -y %s' % package, env={'DEBIAN_FRONTEND': 'noninteractive'})
+    ctx.sudo('apt install -y %s' % ' '.join(packages), env={'DEBIAN_FRONTEND': 'noninteractive'})
 
 
 @task
