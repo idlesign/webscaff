@@ -32,7 +32,8 @@ def symlink_home(ctx):
 @task
 def upload_configs(ctx):
     """Uploads project configuration files (under `conf` dir) to remote."""
-    source = ctx.paths.local.configs
+
+    source = ctx.paths.local.configs + '/'  # slash is rsync semantic specific
 
     if Path(source).exists():
         rsync(ctx, source, ctx.paths.remote.configs, delete=True)
