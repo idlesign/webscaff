@@ -48,6 +48,8 @@ def test_defaults():
     assert paths_remote.project.venv.bin == '/srv/testme/venv/bin'
 
     remote_runtime = paths_remote.project.runtime
+    assert remote_runtime.static == '/srv/testme/runtime/static'
+    assert remote_runtime.media == '/srv/testme/runtime/media'
     assert remote_runtime.certbot == '/srv/testme/runtime/certbot'
     assert remote_runtime.spool == '/srv/testme/runtime/spool'
     assert remote_runtime.reloader == '/srv/testme/runtime/reloader'

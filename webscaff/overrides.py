@@ -55,20 +55,10 @@ class WebscaffConfig(Config):
         remote_runtime = paths.runtime
         remote_runtime_dir = home_remote / 'runtime'
 
-        if not remote_runtime.certbot:
-            remote_runtime.certbot = str(remote_runtime_dir / 'certbot')
-
-        if not remote_runtime.spool:
-            remote_runtime.spool = str(remote_runtime_dir / 'spool')
-
-        if not remote_runtime.reloader:
-            remote_runtime.reloader = str(remote_runtime_dir / 'reloader')
-
-        if not remote_runtime.maintenance:
-            remote_runtime.maintenance = str(remote_runtime_dir / 'maintenance')
-
-        if not remote_runtime.environ:
-            remote_runtime.environ = str(remote_runtime_dir / 'environ')
+        # Set defaults for runtime subdirectories.
+        for runtime_dir_name in remote_runtime._config.keys():
+            if getattr(remote_runtime, runtime_dir_name, None) is None:
+                setattr(remote_runtime, runtime_dir_name, str(remote_runtime_dir / runtime_dir_name))
 
         # Local paths:
         paths = self.paths.local.project
@@ -116,6 +106,8 @@ class WebscaffConfig(Config):
                         'home': None,
                         'base': None,
                         'runtime': {
+                            'static': None,  # Django static directory
+                            'media': None,  # Django media directory
                             'certbot': None,  # Certbot webroot dir
                             'spool': None,  # uWSGI spooler dir
                             'reloader': None,  # uWSGI touch reload file

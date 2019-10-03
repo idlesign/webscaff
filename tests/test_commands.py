@@ -32,6 +32,12 @@ class TestProj:
             'createuser -P mydemo',
             'psql -c "GRANT ALL PRIVILEGES ON DATABASE mydemo TO mydemo"',
             'service postgresql restart',
+            'mkdir -p /srv/mydemo/runtime/static',
+            'chown -R mydemo:mydemo /srv/mydemo/runtime/static',
+            'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /srv/mydemo/runtime/static',
+            'mkdir -p /srv/mydemo/runtime/media',
+            'chown -R mydemo:mydemo /srv/mydemo/runtime/media',
+            'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /srv/mydemo/runtime/media',
             'ln -sf /srv/mydemo/conf/django.py '
             '/srv/mydemo/mydemo/mydemo/settings/settings_production.py',
             'mydemo migrate',
