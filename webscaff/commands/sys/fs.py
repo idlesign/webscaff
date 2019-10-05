@@ -1,10 +1,43 @@
 from invoke import task
+from patchwork.files import append, exists
+from uuid import uuid4
 
 
 @task
 def cat(ctx, path):
     """Outputs file content."""
     ctx.sudo('cat %s' % path)
+
+
+def append_to_file(ctx, filepath, contents):
+    """Add contents to a file.
+
+    :param ctx:
+    :param str filepath:
+    :param str contents:
+
+    """
+    if not exists(ctx, filepath):
+        touch(ctx, filepath)
+    append(ctx, filepath, contents)
+
+
+def make_tmp_file(ctx, contents):
+    """Makes a temporary file with the given content.
+    Returns filepath.
+
+    :param ctx:
+
+    :param str contents:
+
+    :rtype: str
+
+    """
+    fpath = '/tmp/wscf_%s' % uuid4()
+
+    append_to_file(ctx, fpath, contents)
+
+    return fpath
 
 
 def mkdir(ctx, path):

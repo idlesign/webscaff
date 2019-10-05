@@ -1,10 +1,9 @@
 from pathlib import Path
 
 from invoke import task
-from patchwork.files import append as append_to_file
 
-from ..utils import get_symlink_command, rsync, echo
 from ..sys import fs as sys_fs
+from ..utils import get_symlink_command, rsync, echo
 
 
 def symlink_entypoint(ctx):
@@ -21,7 +20,7 @@ def create_environ_file(ctx, type_marker='production'):
     :param str type_marker:
 
     """
-    append_to_file(ctx, ctx.paths.remote.project.runtime.environ, type_marker)
+    sys_fs.append_to_file(ctx, ctx.paths.remote.project.runtime.environ, type_marker)
 
 
 def symlink_home(ctx):

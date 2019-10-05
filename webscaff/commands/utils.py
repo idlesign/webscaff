@@ -1,9 +1,7 @@
 from os import environ
 from pathlib import Path
-from uuid import uuid4
 
 from patchwork.transfers import rsync as rsync_patchwork
-from patchwork.files import append as append_to_file
 
 
 def echo(text):
@@ -56,21 +54,3 @@ def get_symlink_command(src, dest):
 
     """
     return 'ln -sf %s %s' % (src, dest)
-
-
-def make_tmp_file(ctx, contents):
-    """Makes a temporary file with the given content.
-    Returns filepath.
-
-    :param ctx:
-
-    :param str contents:
-
-    :rtype: str
-
-    """
-    fpath = '/tmp/wscf_%s' % uuid4()
-
-    append_to_file(ctx, fpath, contents)
-
-    return fpath

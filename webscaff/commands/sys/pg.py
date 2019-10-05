@@ -3,10 +3,9 @@ from pathlib import Path
 from textwrap import dedent
 
 from invoke import task
-from patchwork.files import append as append_to_file
 
-from .fs import tail
-from ..utils import link_config, make_tmp_file, echo
+from .fs import tail, make_tmp_file, append_to_file
+from ..utils import link_config, echo
 
 
 def stop(ctx):

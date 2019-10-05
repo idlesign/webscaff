@@ -1,6 +1,4 @@
-from invoke import task
-
-from patchwork.files import append as append_to_file
+from .fs import append_to_file
 
 
 def create(ctx, user):
