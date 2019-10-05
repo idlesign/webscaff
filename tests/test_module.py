@@ -21,7 +21,6 @@ def test_defaults():
     assert config.forward_agent
     assert config.tasks['collection_name'] == 'wscaffs'
     assert config.python == 'python3'
-    assert config.user_webserver == 'www-data'
     assert config.dir_conf == 'conf'
 
     project = config.project

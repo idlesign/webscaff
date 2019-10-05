@@ -16,7 +16,6 @@ def bootstrap(ctx):
     me = usr.whoami(ctx)
 
     usr.create(ctx, project.user)
-    usr.add_to_group(ctx, ctx.user_webserver, project.group)
     usr.add_to_group(ctx, me, project.group)
 
     apt.bootstrap(ctx)

@@ -81,7 +81,6 @@ class WebscaffConfig(Config):
 
             'python': 'python3',
 
-            'user_webserver': 'www-data',
             'dir_conf': 'conf',
 
             'project': {

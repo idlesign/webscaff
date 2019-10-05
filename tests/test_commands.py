@@ -9,7 +9,6 @@ class TestProj:
             'whoami',
             'id -u mydemo',
             'useradd -s /bin/bash mydemo',
-            'usermod -a www-data -G mydemo',
             'usermod -a tstout -G mydemo',
             'apt-get update',
             'apt install -y python3-dev python3-pip python3-venv python3-wheel '
