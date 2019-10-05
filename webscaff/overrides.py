@@ -53,12 +53,22 @@ class WebscaffConfig(Config):
             self.paths.remote.cache = '%s/cache_%s' % (self.paths.remote.temp, project_name)
 
         remote_runtime = paths.runtime
-        remote_runtime_dir = home_remote / 'runtime'
+        remote_runtime_root = home_remote / 'runtime'
+
+        if paths.runtime.root:
+            remote_runtime_root = Path(paths.runtime.root)
+
+        else:
+            paths.runtime.root = str(remote_runtime_root)
 
         # Set defaults for runtime subdirectories.
         for runtime_dir_name in remote_runtime._config.keys():
+
+            if runtime_dir_name == 'root':
+                continue
+
             if getattr(remote_runtime, runtime_dir_name, None) is None:
-                setattr(remote_runtime, runtime_dir_name, str(remote_runtime_dir / runtime_dir_name))
+                setattr(remote_runtime, runtime_dir_name, str(remote_runtime_root / runtime_dir_name))
 
         # Local paths:
         paths = self.paths.local.project
@@ -105,6 +115,7 @@ class WebscaffConfig(Config):
                         'home': None,
                         'base': None,
                         'runtime': {
+                            'root': None,  # Runtime root.
                             'static': None,  # Django static directory
                             'media': None,  # Django media directory
                             'certbot': None,  # Certbot webroot dir

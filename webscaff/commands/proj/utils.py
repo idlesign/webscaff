@@ -34,11 +34,12 @@ def bootstrap(ctx):
 
     with ctx.cd(ctx.paths.remote.project.base):
         pip.install(ctx, package='.', editable=True)
+        pip.install(ctx, package='wheel')
         pip.install(ctx, from_req=True)
 
     fs.symlink_entypoint(ctx)
-
     fs.upload_configs(ctx)
+    fs.create_dir(ctx, ctx.paths.remote.project.runtime.root)
     fs.create_environ_file(ctx)
 
     pg.bootstrap(ctx)
