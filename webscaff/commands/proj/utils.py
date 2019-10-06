@@ -5,6 +5,7 @@ from patchwork.files import exists
 
 from . import fs, django, service, uwsgi
 from ..sys import usr, apt, git, venv, pip, pg, utils as sys_utils, certbot
+from ..utils import echo
 
 
 @task
@@ -14,9 +15,14 @@ def bootstrap(ctx):
     project = ctx.project
     project_home = ctx.paths.remote.project.home
     me = usr.whoami(ctx)
+    group = project.group
 
     usr.create(ctx, project.user)
-    usr.add_to_group(ctx, me, project.group)
+    just_added = usr.add_to_group(ctx, me, group)
+
+    if just_added:
+        echo(' * Initial preparation is done. Please rerun the command to proceed.')
+        return
 
     apt.bootstrap(ctx)
 
@@ -55,6 +61,7 @@ def bootstrap(ctx):
     certbot.bootstrap(ctx)
     certbot.get_certificate(ctx)
 
+    echo('* Done. Reboot now ...')
     sys_utils.reboot(ctx)
 
 
