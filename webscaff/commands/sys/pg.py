@@ -144,8 +144,8 @@ def bootstrap(ctx):
     def create_db_and_user():
         sudo_pg = partial(ctx.sudo, user='postgres')
 
-        sudo_pg('createdb %s' % project_name)
-        sudo_pg('createuser -P %s' % project_user)
+        sudo_pg('createdb %s' % project_name, warn=True)
+        sudo_pg('createuser %s' % project_user)  # No password. Using Unix domain sockets.
         sudo_pg('psql -c "GRANT ALL PRIVILEGES ON DATABASE %s TO %s"' % (project_name, project_user))
 
     create_db_and_user()

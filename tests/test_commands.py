@@ -9,7 +9,7 @@ class TestProj:
             'whoami',
             'id -u mydemo',
             'useradd -s /bin/bash mydemo',
-            'usermod -a tstout -G mydemo',
+            'adduser tstout mydemo',
             'apt-get update',
             'apt install -y python3-dev python3-pip python3-venv python3-wheel '
             'build-essential libjpeg-dev libxml2-dev libxslt1-dev libpcre3-dev libssl-dev '
@@ -33,7 +33,7 @@ class TestProj:
             'egrep "^production$" "/srv/mydemo/runtime/environ"',
             'pg_config --version',
             'createdb mydemo',
-            'createuser -P mydemo',
+            'createuser mydemo',
             'psql -c "GRANT ALL PRIVILEGES ON DATABASE mydemo TO mydemo"',
             'service postgresql restart',
             'mkdir -p /srv/mydemo/runtime/static',
