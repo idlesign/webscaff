@@ -41,7 +41,10 @@ def install_vcs(ctx, package, vcs_path):
     """Installs python package(s) using pip from VCS
 
     :param str|list package: E.g.: sitetree
-    :param str vcs_path: E.g.: https://github.com/idlesign/sitetree/@branch
+
+    :param str vcs_path: E.g.:
+        * https://github.com/idlesign/sitetree/@branch
+        * git://github.com/idlesign/uwsgiconf@master
 
     """
     install(ctx, 'git+%s#egg=%s' % (vcs_path, package), editable=True)
