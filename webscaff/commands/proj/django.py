@@ -16,8 +16,9 @@ def manage(ctx, cmd):
     if not isinstance(cmd, list):
         cmd = [cmd]
 
-    for c in cmd:
-        ctx.run('%s %s' % (ctx.project.name, c), pty=True)
+    project_name = ctx.project.name
+    for command in cmd:
+        ctx.sudo('%s %s' % (project_name, command), pty=True, user=project_name)
 
 
 def rollout(ctx):
