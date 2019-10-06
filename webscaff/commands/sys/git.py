@@ -1,7 +1,12 @@
 
 def clone(ctx, path_base, repo_url, dir_target):
-    """Clones a remote repository."""
+    """Clones a remote repository.
 
+
+    .. warning:: Make sure ~/.config is not created beforehand with sudo, otherwise you get:
+        unable to access '/home/XXX/.config/git/attributes'
+
+    """
     if 'github' in repo_url:
         # Just to make sure ssh agent forwarding works well.
         ctx.run('ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts', warn=True)
