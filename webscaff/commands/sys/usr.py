@@ -13,8 +13,14 @@ def add_sudoer(ctx, user):
 
 
 def add_to_group(ctx, user, group):
-    """Adds a user into a group."""
-    ctx.sudo('usermod -a %s -G %s' % (user, group))
+    """Adds a user into a group.
+
+    Returns ``True`` if is just added (not already was there).
+
+    :rtype: bool
+    """
+    result = ctx.sudo('adduser %s %s' % (user, group)).stdout.strip()
+    return 'Adding' in result
 
 
 def get_id(ctx, user):
