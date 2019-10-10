@@ -45,7 +45,8 @@ def bootstrap(ctx):
 
     fs.symlink_entypoint(ctx)
     fs.upload_configs(ctx)
-    fs.create_dir(ctx, ctx.paths.remote.project.runtime.root)
+    fs.create_dir(ctx, ctx.paths.remote.project.state.root)
+    fs.cache_init(ctx)
     fs.create_environ_file(ctx)
 
     pg.bootstrap(ctx)

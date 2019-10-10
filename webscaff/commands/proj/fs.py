@@ -20,7 +20,7 @@ def create_environ_file(ctx, type_marker='production'):
     :param str type_marker:
 
     """
-    sys_fs.append_to_file(ctx, ctx.paths.remote.project.runtime.environ, type_marker)
+    sys_fs.append_to_file(ctx, ctx.paths.remote.project.state.environ, type_marker)
 
 
 def symlink_home(ctx):
@@ -62,5 +62,6 @@ def create_dir(ctx, path):
 @task
 def cache_init(ctx):
     """Initializes cache directory. Drops if already exists."""
-    sys_fs.rm(ctx, '%s*' % ctx.paths.remote.cache)
-    create_dir(ctx, ctx.paths.remote.cache)
+    dir_cache = ctx.paths.remote.cache
+    sys_fs.rm(ctx, '%s*' % dir_cache)
+    create_dir(ctx, dir_cache)

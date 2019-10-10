@@ -36,7 +36,7 @@ def test_defaults():
 
     paths_remote = paths.remote
     assert paths_remote.temp == '/tmp'
-    assert paths_remote.cache == '/tmp/cache_testme'
+    assert paths_remote.cache == '/var/cache/testme'
     assert paths_remote.projects == '/srv'
     assert paths_remote.configs == '/srv/testme/conf'
     assert paths_remote.repo == '/srv/testme'
@@ -46,13 +46,13 @@ def test_defaults():
     assert paths_remote.project.venv.root == '/srv/testme/venv'
     assert paths_remote.project.venv.bin == '/srv/testme/venv/bin'
 
-    remote_runtime = paths_remote.project.runtime
-    assert remote_runtime.static == '/srv/testme/runtime/static'
-    assert remote_runtime.media == '/srv/testme/runtime/media'
-    assert remote_runtime.certbot == '/srv/testme/runtime/certbot'
-    assert remote_runtime.spool == '/srv/testme/runtime/spool'
-    assert remote_runtime.reloader == '/srv/testme/runtime/reloader'
-    assert remote_runtime.environ == '/srv/testme/runtime/environ'
+    remote_state = paths_remote.project.state
+    assert remote_state.static == '/var/lib/testme/static'
+    assert remote_state.media == '/var/lib/testme/media'
+    assert remote_state.certbot == '/var/lib/testme/certbot'
+    assert remote_state.spool == '/var/lib/testme/spool'
+    assert remote_state.reloader == '/var/lib/testme/reloader'
+    assert remote_state.environ == '/var/lib/testme/environ'
 
     paths_local = paths.local
     assert paths_local.configs.endswith('/tests/conf')

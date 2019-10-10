@@ -50,25 +50,25 @@ class WebscaffConfig(Config):
             paths.venv.bin = str(Path(paths.venv.root) / 'bin')
 
         if not self.paths.remote.cache:
-            self.paths.remote.cache = '%s/cache_%s' % (self.paths.remote.temp, project_name)
+            self.paths.remote.cache = str(Path('/var/cache') / project_name)
 
-        remote_runtime = paths.runtime
-        remote_runtime_root = home_remote / 'runtime'
+        remote_state = paths.state
+        remote_state_root = Path('/var/lib') / project_name
 
-        if paths.runtime.root:
-            remote_runtime_root = Path(paths.runtime.root)
+        if paths.state.root:
+            remote_state_root = Path(paths.state.root)
 
         else:
-            paths.runtime.root = str(remote_runtime_root)
+            paths.state.root = str(remote_state_root)
 
         # Set defaults for runtime subdirectories.
-        for runtime_dir_name in remote_runtime._config.keys():
+        for runtime_dir_name in remote_state._config.keys():
 
             if runtime_dir_name == 'root':
                 continue
 
-            if getattr(remote_runtime, runtime_dir_name, None) is None:
-                setattr(remote_runtime, runtime_dir_name, str(remote_runtime_root / runtime_dir_name))
+            if getattr(remote_state, runtime_dir_name, None) is None:
+                setattr(remote_state, runtime_dir_name, str(remote_state_root / runtime_dir_name))
 
         # Local paths:
         paths = self.paths.local.project
@@ -114,8 +114,9 @@ class WebscaffConfig(Config):
                     'project': {
                         'home': None,
                         'base': None,
-                        'runtime': {
-                            'root': None,  # Runtime root.
+                        'state': {
+                            'root': None,  # State directory root
+                            'dumps': None,  # Dumps (DB, etc.) directory
                             'static': None,  # Django static directory
                             'media': None,  # Django media directory
                             'certbot': None,  # Certbot webroot dir

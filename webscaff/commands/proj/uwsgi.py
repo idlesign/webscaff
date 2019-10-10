@@ -7,7 +7,7 @@ from ..sys import fs
 @task
 def reload_touch(ctx):
     """Touches a file to initiate uWSGI reload procedure."""
-    fs.touch(ctx, ctx.paths.remote.project.runtime.reloader)
+    fs.touch(ctx, ctx.paths.remote.project.state.reloader)
 
 
 @task
@@ -15,21 +15,21 @@ def bootstrap(ctx):
     """Bootstraps uWSGI for the project."""
 
     # Create touch reload file.
-    fs.touch(ctx, ctx.paths.remote.project.runtime.reloader)
+    fs.touch(ctx, ctx.paths.remote.project.state.reloader)
     # Add spooler directory.
-    fs.mkdir(ctx, ctx.paths.remote.project.runtime.spool)
+    fs.mkdir(ctx, ctx.paths.remote.project.state.spool)
 
 
 @task
 def maintenance_on(ctx):
     """Turns on maintenance mode."""
-    fs.touch(ctx, ctx.paths.remote.project.runtime.maintenance)
+    fs.touch(ctx, ctx.paths.remote.project.state.maintenance)
 
 
 @task
 def maintenance_off(ctx):
     """Turns off maintenance mode."""
-    fs.rm(ctx, ctx.paths.remote.project.runtime.maintenance)
+    fs.rm(ctx, ctx.paths.remote.project.state.maintenance)
 
 
 @contextmanager

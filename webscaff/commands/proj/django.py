@@ -58,9 +58,9 @@ def bootstrap(ctx):
     """Puts Django production settings file to remote."""
 
     # Create media and static directories.
-    runtime_dir = ctx.paths.remote.project.runtime
-    create_dir(ctx, runtime_dir.static)
-    create_dir(ctx, runtime_dir.media)
+    dir_state = ctx.paths.remote.project.state
+    create_dir(ctx, dir_state.static)
+    create_dir(ctx, dir_state.media)
 
     link_config(
         ctx,

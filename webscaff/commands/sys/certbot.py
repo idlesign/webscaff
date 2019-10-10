@@ -6,7 +6,7 @@ from . import fs
 @task
 def bootstrap(ctx):
     """Bootstraps Certbot for the project."""
-    fs.mkdir(ctx, ctx.paths.remote.project.runtime.certbot)
+    fs.mkdir(ctx, ctx.paths.remote.project.state.certbot)
 
 
 def get_certificate(ctx):
@@ -18,7 +18,7 @@ def get_certificate(ctx):
     project = ctx.project
     domain = project.domain
     email = project.email or ''
-    webroot = ctx.paths.remote.project.runtime.certbot
+    webroot = ctx.paths.remote.project.state.certbot
 
     if email:
         email = '--email %s' % email
