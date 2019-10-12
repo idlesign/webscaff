@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+
 from invoke import task
 
 from ..sys import fs
@@ -20,13 +21,13 @@ def bootstrap(ctx):
 
 
 @task
-def maintenance_on(ctx):
+def on_503(ctx):
     """Turns on maintenance mode."""
     fs.touch(ctx, ctx.paths.remote.project.state.maintenance)
 
 
 @task
-def maintenance_off(ctx):
+def off_503(ctx):
     """Turns off maintenance mode."""
     fs.rm(ctx, ctx.paths.remote.project.state.maintenance)
 
@@ -35,10 +36,10 @@ def maintenance_off(ctx):
 def maintenance_mode(ctx):
     """Temporarily turn on maintenance mode."""
 
-    maintenance_on(ctx)
+    on_503(ctx)
 
     try:
         yield
 
     finally:
-        maintenance_off(ctx)
+        off_503(ctx)
