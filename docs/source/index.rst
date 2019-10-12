@@ -15,7 +15,7 @@ Used stack
 
 * **Debian**-based OS (Ubuntu 18.04 tested) as a basis.
 * **Git** for source code updates.
-* **Systemd** to securely run our webservice.
+* **Systemd** to securely run your webservice.
 * **PostgreSQL** as a reliable DBMS.
 * **uWSGI** as a platform (handling routing, static, background tasks, etc.).
 * **Python 3** to cover your needs.

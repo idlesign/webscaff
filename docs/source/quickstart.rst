@@ -78,7 +78,7 @@ You'll be asked for information you gathered on previous steps.
 6. Remote initialization
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now ``cd` into your project directory (it'll contain ``wscaff.yml``, for example ``/home/some/here``).
+Now ``cd`` into your project directory (it'll contain ``wscaff.yml``, for example ``/home/some/here``).
 
 Let's make sure configuration is success:
 
