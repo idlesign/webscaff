@@ -31,9 +31,3 @@ def info(ctx):
 def shutdown(ctx):
     """Turns the remote off immediately."""
     ctx.sudo('shutdown now')
-
-
-@task
-def tail(ctx, fname):
-    """Tails a file to output."""
-    ctx.sudo('tail -f %s' % fname)

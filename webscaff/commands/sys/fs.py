@@ -103,6 +103,7 @@ def gzip_dir(ctx, src, target_fname, change_dir=None, do_sudo=False):
     return target_fname
 
 
+@task
 def tail(ctx, filepath):
     """Tails a file to output."""
     # todo maybe use a more powerful tail from orchestra
