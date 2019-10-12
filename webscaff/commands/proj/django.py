@@ -33,7 +33,6 @@ def migrate(ctx):
     manage(ctx, 'migrate')
 
 
-@task
 def create_superuser(ctx):
     """Runs Django manage command for project to create a superuser.
     Tries to get e-mail from settings, and username from e-mail.
@@ -53,7 +52,6 @@ def create_superuser(ctx):
     manage(ctx, command)
 
 
-@task
 def bootstrap(ctx):
     """Puts Django production settings file to remote."""
 
@@ -69,3 +67,6 @@ def bootstrap(ctx):
         name_remote='settings_production.py',
         dir_remote_confs=Path(ctx.paths.remote.project.base) / ctx.project.name / 'settings'
     )
+
+    migrate(ctx)
+    create_superuser(ctx)

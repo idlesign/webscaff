@@ -6,13 +6,6 @@ from ..sys import fs as sys_fs
 from ..utils import get_symlink_command, rsync, echo
 
 
-def symlink_entypoint(ctx):
-    """Create a system-wide symlink to a project entrypoint."""
-    project_name = ctx.project.name
-    ctx.sudo(get_symlink_command(
-        '%s/%s' % (ctx.paths.remote.project.venv.bin, project_name), '/usr/bin/%s' % project_name))
-
-
 def create_environ_file(ctx, type_marker='production'):
     """Creates environment marker file for a given environment type.
 
@@ -24,8 +17,20 @@ def create_environ_file(ctx, type_marker='production'):
 
 
 def symlink_home(ctx):
-    """Create symlinks in user's home to a project home directory."""
-    ctx.sudo(get_symlink_command(ctx.paths.remote.project.home, '~/%s' % ctx.project.name))
+    """Create a directory with project-related symlinks in user's home."""
+
+    home_linkroot = '~/%s' % ctx.project.name
+
+    sys_fs.mkdir(ctx, home_linkroot)
+
+    dir_map = {
+        ctx.paths.remote.project.home: 'project',
+        ctx.paths.remote.project.state.root: 'state',
+        ctx.paths.remote.cache: 'cache',
+    }
+
+    for dir_, linkname in dir_map.items():
+        ctx.sudo(get_symlink_command(dir_, '%s/%s' % (home_linkroot, linkname)))
 
 
 @task
@@ -65,3 +70,27 @@ def cache_init(ctx):
     dir_cache = ctx.paths.remote.cache
     sys_fs.rm(ctx, '%s*' % dir_cache)
     create_dir(ctx, dir_cache)
+
+
+def bootstrap(ctx):
+    """Bootstraps filesystem for the project."""
+
+    project = ctx.paths.remote.project
+    dir_state = project.state
+
+    dirs = [
+        project.home,
+        dir_state.root,
+        dir_state.dumps,
+        dir_state.static,
+        dir_state.media,
+    ]
+
+    for dir_ in dirs:
+        create_dir(ctx, dir_)
+
+    upload_configs(ctx)
+    cache_init(ctx)
+    create_environ_file(ctx)
+
+    symlink_home(ctx)

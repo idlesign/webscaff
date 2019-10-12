@@ -1,12 +1,10 @@
-from invoke import task
-
-from . import fs
+from ..sys import fs
 
 
-@task
 def bootstrap(ctx):
     """Bootstraps Certbot for the project."""
     fs.mkdir(ctx, ctx.paths.remote.project.state.certbot)
+    get_certificate(ctx)
 
 
 def get_certificate(ctx):

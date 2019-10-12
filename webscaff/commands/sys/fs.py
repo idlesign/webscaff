@@ -107,3 +107,24 @@ def tail(ctx, filepath):
     """Tails a file to output."""
     # todo maybe use a more powerful tail from orchestra
     ctx.sudo('tail -f %s' % filepath)
+
+
+def swap_init(ctx):
+    """Creates a swap file."""
+    swap_file = '/swapfile'
+    ctx.sudo('dd if=/dev/zero of=%s bs=1024 count=524288' % swap_file)
+    chmod(ctx, swap_file, 600)
+    ctx.sudo('mkswap %s' % swap_file)
+    swap_on(ctx)
+
+
+def swap_on(ctx):
+    """Turns on swap."""
+    swap_file = '/swapfile'
+    ctx.sudo('swapon %s' % swap_file)
+
+
+def swap_off(ctx):
+    """Turns off swap."""
+    swap_file = '/swapfile'
+    ctx.sudo('swapoff %s' % swap_file)

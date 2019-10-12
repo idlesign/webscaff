@@ -2,7 +2,7 @@ from ..utils import collection_from_sub
 from .proj.utils import bootstrap, rollout, backup
 from .proj.log import stream
 from .proj.uwsgi import reload_touch, maintenance_on, maintenance_off
-from .proj.service import restart
+from .proj.service import restart, status
 from .sys.utils import reboot, info
 
 
@@ -16,4 +16,5 @@ ns.add_task(reboot)
 ns.add_task(reload_touch, name='reload')
 ns.add_task(restart)
 ns.add_task(rollout)
+ns.add_task(status)
 ns.add_task(stream, name='log')

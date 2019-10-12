@@ -1,7 +1,5 @@
 from invoke import task
 
-from .fs import chmod
-
 
 @task
 def reboot(ctx):
@@ -33,30 +31,6 @@ def info(ctx):
 def shutdown(ctx):
     """Turns the remote off immediately."""
     ctx.sudo('shutdown now')
-
-
-@task
-def swap_init(ctx):
-    """Creates a swap file."""
-    swap_file = '/swapfile'
-    ctx.sudo('dd if=/dev/zero of=%s bs=1024 count=524288' % swap_file)
-    chmod(ctx, swap_file, 600)
-    ctx.sudo('mkswap %s' % swap_file)
-    swap_on()
-
-
-@task
-def swap_on(ctx):
-    """Turns on swap."""
-    swap_file = '/swapfile'
-    ctx.sudo('swapon %s' % swap_file)
-
-
-@task
-def swap_off(ctx):
-    """Turns off swap."""
-    swap_file = '/swapfile'
-    ctx.sudo('swapoff %s' % swap_file)
 
 
 @task

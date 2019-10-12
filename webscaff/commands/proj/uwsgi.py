@@ -10,7 +10,6 @@ def reload_touch(ctx):
     fs.touch(ctx, ctx.paths.remote.project.state.reloader)
 
 
-@task
 def bootstrap(ctx):
     """Bootstraps uWSGI for the project."""
 
