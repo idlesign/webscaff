@@ -29,7 +29,7 @@ setup(
     version=get_version(),
     url='https://github.com/idlesign/webscaff',
 
-    description='Scaffolding for web applications.',
+    description='Remote scaffolding and orchestration for web applications',
     long_description=read_file('README.rst'),
     license='BSD 3-Clause License',
 

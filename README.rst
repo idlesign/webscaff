@@ -23,9 +23,7 @@ https://github.com/idlesign/webscaff
 Description
 -----------
 
-*Scaffolding for web applications.*
-
-Offers basic means for orchestration of a remote system running web applications.
+*Remote scaffolding and orchestration for web applications*
 
 
 Used stack
