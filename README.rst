@@ -25,8 +25,47 @@ Description
 
 *Scaffolding for web applications.*
 
-Here will be an introductory description.
+Offers basic means for orchestration of a remote system running web applications.
 
+
+Used stack
+~~~~~~~~~~
+
+* **Debian**-based OS (Ubuntu 18.04 tested) as a basis.
+* **Git** for source code updates.
+* **Systemd** to securely run our webservice.
+* **PostgreSQL** as a reliable DBMS.
+* **uWSGI** as a platform (handling routing, static, background tasks, etc.).
+* **Python 3** to cover your needs.
+* **Django** as a rich and solid webframework.
+
+And also:
+
+* **Certbot** integration for free HTTPS certificates (webroot plugin).
+* SSH Agent forwarding for project code updates on remote using keys from your system.
+
+
+A taste of it
+-------------
+
+After install the ``webscaff`` command is available.
+
+.. code-block:: bash
+
+    ; We rollout project skeleton using `makeapp`.
+    $ makeapp new myproject -d "My webscaff project" -t webscaff /home/some/here
+
+    ; Switch into project directory containing `wscaff.yml` which is used by webscaff.
+    $ cd /home/some/here
+
+    ; Get basic information about the remote.
+    $ webscaff info
+
+    ; Prepare the remote for you web application.
+    $ webscaff initialize
+
+
+Detailed instructions are in the documentation.
 
 
 Documentation
