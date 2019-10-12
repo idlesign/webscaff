@@ -64,7 +64,6 @@ class TestProj:
             'mydemo createsuperuser --email idlesign@some.com --username idlesign',
             'touch /var/lib/mydemo/reloader',
             'mkdir -p /var/lib/mydemo/spool',
-            'mydemo uwsgi_sysinit > /srv/mydemo/conf/mydemo.service',
             'systemctl enable /srv/mydemo/conf/mydemo.service',
             'systemctl start mydemo',
             'mkdir -p /var/lib/mydemo/certbot',

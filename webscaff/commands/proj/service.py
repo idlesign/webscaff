@@ -9,7 +9,6 @@ def bootstrap(ctx):
     project_name = ctx.project.name
     service_file = Path(ctx.paths.remote.configs) / ('%s.service' % project_name)
 
-    ctx.run('%s uwsgi_sysinit > %s' % (project_name, service_file))
     ctx.sudo('systemctl enable %s' % service_file)
     ctx.sudo('systemctl start %s' % project_name)
 
