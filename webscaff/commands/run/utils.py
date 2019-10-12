@@ -1,6 +1,6 @@
 from invoke import task
 
-from . import fs, django, service, uwsgi, venv, git, certbot, pg
+from . import fs, dj, service, uwsgi, venv, git, certbot, pg
 from ..sys import usr, apt, utils as sys_utils
 from ..utils import echo
 
@@ -24,7 +24,7 @@ def bootstrap(ctx):
     git.bootstrap(ctx)
     venv.bootstrap(ctx)
     pg.bootstrap(ctx)
-    django.bootstrap(ctx)
+    dj.bootstrap(ctx)
     uwsgi.bootstrap(ctx)
     service.bootstrap(ctx)
     certbot.bootstrap(ctx)
@@ -38,7 +38,7 @@ def bootstrap(ctx):
 def rollout(ctx):
     """Updates remote files from remote repository and rolls out project."""
     git.pull(ctx)
-    django.rollout(ctx)
+    dj.rollout(ctx)
     uwsgi.reload_touch()
 
 
