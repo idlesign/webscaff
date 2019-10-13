@@ -9,8 +9,7 @@ def bootstrap(ctx):
     project_name = ctx.project.name
     service_file = Path(ctx.paths.remote.configs) / ('%s.service' % project_name)
 
-    ctx.sudo('systemctl enable %s' % service_file)
-    ctx.sudo('systemctl start %s' % project_name)
+    ctx.sudo('systemctl enable --now %s' % service_file)
 
 
 def restart(ctx):
