@@ -1,5 +1,7 @@
 from invoke import task
 
+from ..utils import echo
+
 
 def reboot(ctx):
     """Reboots remote immediately."""
@@ -20,8 +22,11 @@ def set_locale(ctx, locale='ru_RU'):
 def info(ctx):
     """Prints out remote system information, including kernel info and timezone."""
     ctx.run('uname -a')
+    echo('')
     ctx.run('cat /etc/timezone')
+    echo('')
     ctx.run('uptime')
+    echo('')
     ctx.run('df -h')
 
 
