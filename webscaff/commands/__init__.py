@@ -1,3 +1,5 @@
+from invoke import task
+
 from .run.log import stream
 from .run.service import restart, status
 from .run.utils import bootstrap, rollout, backup
@@ -6,14 +8,20 @@ from .sys.utils import reboot, info
 from ..utils import collection_from_sub
 
 ns = collection_from_sub(__file__, __name__)
-ns.add_task(backup)
-ns.add_task(bootstrap, name='initialize')
-ns.add_task(info)
-ns.add_task(on_503, name='off')
-ns.add_task(off_503, name='on')
-ns.add_task(reboot)
-ns.add_task(reload_touch, name='reload')
-ns.add_task(restart)
-ns.add_task(rollout)
-ns.add_task(status)
-ns.add_task(stream, name='log')
+
+
+def register_task(task_func, name=None):
+    ns.add_task(task(task_func), name=name)
+
+
+register_task(backup)
+register_task(bootstrap, name='initialize')
+register_task(info)
+register_task(on_503, name='off')
+register_task(off_503, name='on')
+register_task(reboot)
+register_task(reload_touch, name='reload')
+register_task(restart)
+register_task(rollout)
+register_task(status)
+register_task(stream, name='log')

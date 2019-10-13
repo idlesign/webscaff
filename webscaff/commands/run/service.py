@@ -13,13 +13,11 @@ def bootstrap(ctx):
     ctx.sudo('systemctl start %s' % project_name)
 
 
-@task
 def restart(ctx):
     """Restarts project service."""
     ctx.sudo('systemctl restart %s' % ctx.project.name)
 
 
-@task
 def status(ctx):
     """Returns project service status."""
     ctx.sudo('systemctl status %s' % ctx.project.name)

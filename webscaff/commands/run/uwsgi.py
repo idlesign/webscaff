@@ -5,7 +5,6 @@ from invoke import task
 from ..sys import fs
 
 
-@task
 def reload_touch(ctx):
     """Touches a file to initiate uWSGI reload procedure."""
     fs.touch(ctx, ctx.paths.remote.project.state.reloader)
@@ -20,13 +19,11 @@ def bootstrap(ctx):
     fs.mkdir(ctx, ctx.paths.remote.project.state.spool)
 
 
-@task
 def on_503(ctx):
     """Turns on maintenance mode."""
     fs.touch(ctx, ctx.paths.remote.project.state.maintenance)
 
 
-@task
 def off_503(ctx):
     """Turns off maintenance mode."""
     fs.rm(ctx, ctx.paths.remote.project.state.maintenance)

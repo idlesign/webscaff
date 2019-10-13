@@ -5,7 +5,6 @@ from ..sys import usr, apt, utils as sys_utils
 from ..utils import echo
 
 
-@task
 def bootstrap(ctx):
     """Initializes a remote for your project."""
 
@@ -34,15 +33,13 @@ def bootstrap(ctx):
     sys_utils.reboot(ctx)
 
 
-@task
 def rollout(ctx):
     """Updates remote files from remote repository and rolls out project."""
     git.pull(ctx)
     dj.rollout(ctx)
-    uwsgi.reload_touch()
+    uwsgi.reload_touch(ctx)
 
 
-@task
 def backup(ctx):
     """Creates a project backup."""
     # todo implement
