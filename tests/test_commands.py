@@ -37,7 +37,7 @@ class TestProj:
             'test -e "$(echo /var/lib/mydemo/environ)"',
             'egrep "^production$" "/var/lib/mydemo/environ"',
             'mkdir -p ~/mydemo',
-            'ln -sf /srv/mydemo ~/mydemo/project',
+            'ln -sf /srv/mydemo ~/mydemo/code',
             'ln -sf /var/lib/mydemo ~/mydemo/state',
             'ln -sf /var/cache/mydemo ~/mydemo/cache',
             'test -e "$(echo /srv/mydemo/.git)"',

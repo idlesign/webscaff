@@ -24,7 +24,7 @@ def symlink_home(ctx):
     sys_fs.mkdir(ctx, home_linkroot)
 
     dir_map = [
-        (ctx.paths.remote.project.home, 'project'),
+        (ctx.paths.remote.project.home, 'code'),
         (ctx.paths.remote.project.state.root, 'state'),
         (ctx.paths.remote.cache, 'cache'),
     ]
