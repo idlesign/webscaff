@@ -21,6 +21,7 @@ def bootstrap(ctx):
     apt.bootstrap(ctx)
     fs.bootstrap(ctx)
     git.bootstrap(ctx)
+    fs.upload_configs(ctx)
     venv.bootstrap(ctx)
     pg.bootstrap(ctx)
     dj.bootstrap(ctx)

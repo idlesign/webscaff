@@ -89,7 +89,6 @@ def bootstrap(ctx):
     for dir_ in dirs:
         create_dir(ctx, dir_)
 
-    upload_configs(ctx)
     cache_init(ctx)
     create_environ_file(ctx)
 
