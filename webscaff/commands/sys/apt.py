@@ -22,6 +22,7 @@ BOOTSTRAP_SYSTEM_PACKAGES = [
     'mc',
     'htop',
     'net-tools',
+    'ncdu',
 ]
 
 
