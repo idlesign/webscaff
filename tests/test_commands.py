@@ -5,7 +5,7 @@ class TestProj:
     def test_bootstrap(self, run_command_mock, monkeypatch):
         monkeypatch.setattr('webscaff.commands.utils.rsync_patchwork', lambda *args, **kwargs: None)
 
-        assert run_command_mock('initialize') == [
+        assert run_command_mock('run.initialize') == [
             'whoami',
             'id -u mydemo',
             'useradd -s /bin/bash mydemo',
@@ -13,7 +13,7 @@ class TestProj:
             'apt-get update',
             'apt install -y python3-dev python3-pip python3-venv python3-wheel '
             'build-essential libjpeg-dev libxml2-dev libxslt1-dev libpcre3-dev libssl-dev '
-            'git postgresql libpq-dev certbot acl mc htop net-tools',
+            'git postgresql libpq-dev certbot acl mc htop net-tools ncdu',
             'mkdir -p /srv/mydemo',
             'chown -R mydemo:mydemo /srv/mydemo',
             'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /srv/mydemo',

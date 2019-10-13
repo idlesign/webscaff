@@ -59,7 +59,6 @@ def install(ctx, packages):
     ctx.sudo('apt install -y %s' % ' '.join(packages), env={'DEBIAN_FRONTEND': 'noninteractive'})
 
 
-@task
 def bootstrap(ctx):
     """Bootstraps system by installing required packages."""
     install(ctx, BOOTSTRAP_SYSTEM_PACKAGES)

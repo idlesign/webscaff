@@ -96,7 +96,7 @@ Now we're ready for remote system initialization:
 
 .. code-block:: bash
 
-    $ webscaff initialize
+    $ webscaff run.initialize
 
 
 The initialization process is done in to steps. Please follow the instructions.

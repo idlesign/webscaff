@@ -60,7 +60,7 @@ After install the ``webscaff`` command is available.
     $ webscaff info
 
     ; Prepare the remote for you web application.
-    $ webscaff initialize
+    $ webscaff run.initialize
 
 
 Detailed instructions are in the documentation.

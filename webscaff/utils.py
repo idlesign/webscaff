@@ -1,7 +1,13 @@
 from importlib import import_module
 from pathlib import Path
 
-from invoke import Collection
+from invoke import Collection, task
+
+
+class WebscaffCollection(Collection):
+
+    def register_task(self, task_func, name=None):
+        self.add_task(task(task_func), name=name)
 
 
 def collection_from_sub(filepath, name):
@@ -12,7 +18,7 @@ def collection_from_sub(filepath, name):
 
     """
     dir_base = Path(filepath).parent
-    ns = Collection()
+    ns = WebscaffCollection()
 
     def contribute(items):
 
