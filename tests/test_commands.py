@@ -64,9 +64,10 @@ class TestProj:
             'mydemo createsuperuser --email idlesign@some.com --username idlesign',
             'touch /var/lib/mydemo/reloader',
             'mkdir -p /var/lib/mydemo/spool',
-            'systemctl enable /srv/mydemo/conf/mydemo.service',
-            'systemctl start mydemo',
+            'systemctl enable --now /srv/mydemo/conf/mydemo.service',
             'mkdir -p /var/lib/mydemo/certbot',
+            'chown -R mydemo:mydemo /var/lib/mydemo/certbot',
+            'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /var/lib/mydemo/certbot',
             'certbot --agree-tos --no-eff-email --email idlesign@some.com certonly '
             '--webroot -d mydemo.here -w /var/lib/mydemo/certbot',
             'shutdown -r now',

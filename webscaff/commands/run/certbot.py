@@ -1,9 +1,9 @@
-from ..sys import fs
+from . import fs
 
 
 def bootstrap(ctx):
     """Bootstraps Certbot for the project."""
-    fs.mkdir(ctx, ctx.paths.remote.project.state.certbot)
+    fs.create_dir(ctx, ctx.paths.remote.project.state.certbot)
     get_certificate(ctx)
 
 
