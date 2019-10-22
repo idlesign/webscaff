@@ -58,8 +58,7 @@ class TestProj:
             'mkdir -p /var/lib/mydemo/media',
             'chown -R mydemo:mydemo /var/lib/mydemo/media',
             'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /var/lib/mydemo/media',
-            'ln -sf /srv/mydemo/conf/django.py '
-            '/srv/mydemo/mydemo/mydemo/settings/settings_production.py',
+            'ln -sf /srv/mydemo/conf/django.py /srv/mydemo/mydemo/mydemo/settings/settings_production.py',
             'mydemo migrate',
             'mydemo createsuperuser --email idlesign@some.com --username idlesign',
             'touch /var/lib/mydemo/reloader',
@@ -68,10 +67,8 @@ class TestProj:
             'mkdir -p /var/lib/mydemo/certbot',
             'chown -R mydemo:mydemo /var/lib/mydemo/certbot',
             'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /var/lib/mydemo/certbot',
-            'ln -sf /srv/mydemo/conf/mydemo-certbot-hook.sh '
-            '/etc/letsencrypt/renewal-hooks/deploy/mydemo',
-            'certbot --agree-tos --no-eff-email --email idlesign@some.com certonly '
-            '--webroot -d mydemo.here -w /var/lib/mydemo/certbot',
+            'ln -sf /srv/mydemo/conf/mydemo-certbot-hook.sh /etc/letsencrypt/renewal-hooks/deploy/mydemo',
+            'certbot --agree-tos --no-eff-email --email idlesign@some.com certonly --webroot -d mydemo.here -w /var/lib/mydemo/certbot',
             'shutdown -r now',
         ]
 
