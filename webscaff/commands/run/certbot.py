@@ -1,9 +1,23 @@
+from pathlib import Path
+
 from . import fs
+from ..utils import link_config
 
 
 def bootstrap(ctx):
     """Bootstraps Certbot for the project."""
     fs.create_dir(ctx, ctx.paths.remote.project.state.certbot)
+    project_name = ctx.project.name
+
+    # Link a deploy hook, to allow project user access to it.
+    link_config(
+        ctx,
+        title='certbot hook',
+        name_local=project_name + '-certbot-hook.sh',
+        name_remote=project_name,
+        dir_remote_confs=Path('/etc/letsencrypt/renewal-hooks/deploy/')
+    )
+
     get_certificate(ctx)
 
 
