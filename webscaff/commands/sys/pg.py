@@ -39,10 +39,11 @@ def log_main(ctx):
     tail(ctx, '/var/log/postgresql/postgresql-%s-main.log' % '.'.join(version))
 
 
-def dump(ctx, db_name, target_dir):
+def dump(ctx, db_name, target_dir, binary=True):
     """Dumps DB by name into target directory."""
-    target_path = Path(target_dir) / 'db.sql'
-    ctx.run('pg_dump %s > %s' % (db_name, target_path))
+    target_path = Path(target_dir) / 'db.' + ('dump' if binary else 'sql')
+    fmt = '-Fc' if binary else ''
+    ctx.run('pg_dump %s %s > %s' % (fmt, db_name, target_path))
     return target_path
 
 
