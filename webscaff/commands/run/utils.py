@@ -1,7 +1,9 @@
-from invoke import task
+from datetime import datetime
+from os import makedirs
+from pathlib import Path
 
 from . import fs, dj, service, uwsgi, venv, git, certbot, pg
-from ..sys import usr, apt, utils as sys_utils
+from ..sys import usr, apt, utils as sys_utils, fs as sys_fs
 from ..utils import echo
 
 
@@ -43,5 +45,35 @@ def rollout(ctx):
 
 def backup(ctx):
     """Creates a project backup."""
-    # todo implement
-    raise NotImplementedError
+
+    path_dump_local = ctx.paths.local.project.state.dumps
+
+    makedirs(path_dump_local, exist_ok=True)
+
+    path_dumps = Path(ctx.paths.remote.project.state.dumps)
+    path_dump = path_dumps / ('%s-%s_dump' % (
+        datetime.now().strftime('%Y-%m-%dT%H%M'),
+        ctx.project.name
+    ))
+
+    # Create a subdirectory in dumps.
+    sys_fs.mkdir(ctx, path_dump)
+
+    try:
+        dj.dump(ctx, target_dir=path_dump / 'media')
+        certbot.dump(ctx, target_dir=path_dump / 'certbot')
+        pg.dump(ctx, target_dir=path_dump)
+
+        # Archive everything dumped so far.
+        path_dump_arch = sys_fs.gzip_dir(ctx, path_dump, path_dump)
+
+        try:
+            # Download it to local machine.
+            ctx.get(path_dump_arch, str(Path(path_dump_local) / path_dump_arch.name))
+
+        finally:
+            sys_fs.rm(ctx, path_dump_arch)
+
+    finally:
+        # Remove dumps subdir.
+        sys_fs.rm(ctx, path_dump)

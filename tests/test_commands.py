@@ -1,6 +1,21 @@
+from freezegun import freeze_time
 
 
 class TestProj:
+
+    def test_dump(self, run_command_mock, ):
+
+        with freeze_time('2020-01-11T11:55'):
+
+            assert run_command_mock('run.backup') == [
+                'mkdir -p /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump',
+                'bash -c "cd /var/lib/mydemo/media && tar -czf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump/media.tar.gz *"',
+                'bash -c "cd /etc/letsencrypt && tar -czf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump/certbot.tar.gz *"',
+                'pg_dump -Fc mydemo > /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump/db.dump',
+                'bash -c "cd /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump && tar -czf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump.tar.gz *"',
+                'rm -rf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump.tar.gz',
+                'rm -rf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump',
+            ]
 
     def test_bootstrap(self, run_command_mock, monkeypatch):
         monkeypatch.setattr('webscaff.commands.utils.rsync_patchwork', lambda *args, **kwargs: None)

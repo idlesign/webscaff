@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from . import fs
+from ..sys import fs as sys_fs
 from ..utils import link_config
 
 
@@ -40,3 +41,14 @@ def get_certificate(ctx):
         (email, domain, webroot))
 
     ctx.sudo(command)
+
+
+def dump(ctx, target_dir):
+    """Dumps Certbot related stuff into a target directory."""
+
+    sys_fs.gzip_dir(
+        ctx,
+        '/etc/letsencrypt',
+        target_dir,
+        do_sudo=True
+    )

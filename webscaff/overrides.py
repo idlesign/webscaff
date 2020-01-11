@@ -21,6 +21,25 @@ class WebscaffConfig(Config):
 
     def contribute_missing(self):
 
+        def init_state_dirs(state_root):
+
+            state = paths.state
+
+            if paths.state.root:
+                state_root = Path(paths.state.root)
+
+            else:
+                paths.state.root = str(state_root)
+
+            # Set defaults for runtime subdirectories.
+            for state_dir_name in state._config.keys():
+
+                if state_dir_name == 'root':
+                    continue
+
+                if getattr(state, state_dir_name, None) is None:
+                    setattr(state, state_dir_name, str(state_root / state_dir_name))
+
         project_name = self.project.name
 
         if not self.project.user:
@@ -52,29 +71,17 @@ class WebscaffConfig(Config):
         if not self.paths.remote.cache:
             self.paths.remote.cache = str(Path('/var/cache') / project_name)
 
-        remote_state = paths.state
-        remote_state_root = Path('/var/lib') / project_name
-
-        if paths.state.root:
-            remote_state_root = Path(paths.state.root)
-
-        else:
-            paths.state.root = str(remote_state_root)
-
-        # Set defaults for runtime subdirectories.
-        for runtime_dir_name in remote_state._config.keys():
-
-            if runtime_dir_name == 'root':
-                continue
-
-            if getattr(remote_state, runtime_dir_name, None) is None:
-                setattr(remote_state, runtime_dir_name, str(remote_state_root / runtime_dir_name))
+        # Initialize remote state dirs.
+        init_state_dirs(state_root=Path('/var/lib') / project_name)
 
         # Local paths:
         paths = self.paths.local.project
 
         if not paths.base:
             paths.base = str(Path(paths.home) / project_name)
+
+        # Initialize local state dirs.
+        init_state_dirs(state_root=Path(paths.home) / 'state')
 
         # Local and remote configs:
         self.paths.local.configs = str(Path(self.paths.local.project.home) / self.dir_conf)
@@ -136,6 +143,10 @@ class WebscaffConfig(Config):
                     'project': {
                         'home': str(Path.cwd()),
                         'base': None,
+                        'state': {
+                            'root': None,
+                            'dumps': None,
+                        }
                     }
                 }
             }

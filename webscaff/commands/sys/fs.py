@@ -1,6 +1,10 @@
+from pathlib import Path
+from uuid import uuid4
+
 from invoke import task
 from patchwork.files import append, exists
-from uuid import uuid4
+
+from ..utils import echo, cd_sudo
 
 
 @task
@@ -86,21 +90,25 @@ def rm(ctx, target, force=True):
     ctx.sudo('rm -r%s %s' % ('f' if force else '', target))
 
 
-def gzip_dir(ctx, src, target_fname, change_dir=None, do_sudo=False):
+@task
+def gzip_dir(ctx, src, target_fname, do_sudo=False):
     """GZips a directory."""
+    target_fname = str(target_fname)
+
     arch_ext = '.tar.gz'
 
     if arch_ext not in target_fname:
         target_fname = '%s%s' % (target_fname, arch_ext)
 
-    change_dir = change_dir or ''
-    if change_dir:
-        change_dir = '-C %s' % change_dir
+    echo('Creating %s ...' % target_fname)
 
-    command = ctx.sudo if do_sudo else ctx.run
-    command('tar -czf %s %s %s' % (target_fname, change_dir, src))
+    command = 'tar -czf %s *' % target_fname
+    command = cd_sudo(src, command)
+    method = ctx.sudo if do_sudo else ctx.run
 
-    return target_fname
+    method(command, warn=True)
+
+    return Path(target_fname)
 
 
 @task

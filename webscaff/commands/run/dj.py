@@ -3,6 +3,7 @@ from pathlib import Path
 from invoke import task
 
 from .fs import create_dir
+from ..sys import fs as sys_fs
 from ..utils import link_config, echo
 
 
@@ -70,3 +71,13 @@ def bootstrap(ctx):
 
     migrate(ctx)
     create_superuser(ctx)
+
+
+def dump(ctx, target_dir):
+    """Dumps Django related stuff into a target directory."""
+
+    sys_fs.gzip_dir(
+        ctx,
+        ctx.paths.remote.project.state.media,
+        target_dir,
+    )

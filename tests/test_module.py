@@ -58,3 +58,5 @@ def test_defaults():
     assert paths_local.configs.endswith('/tests/conf')
     assert paths_local.project.home.endswith('/tests')
     assert paths_local.project.base.endswith('/tests/testme')
+    assert paths_local.project.state.root.endswith('/tests/state')
+    assert paths_local.project.state.dumps.endswith('/tests/state/dumps')

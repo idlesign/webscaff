@@ -14,6 +14,11 @@ def bootstrap(ctx):
         project_user=ctx.project.user)
 
 
+def dump(ctx, target_dir):
+    """Dumps project Database into a target directory."""
+    sys_pg.dump(ctx, ctx.project.name, target_dir=target_dir)
+
+
 @task
 def psql(ctx, command=None):
     """Launches psql command line utility.

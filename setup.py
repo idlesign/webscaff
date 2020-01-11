@@ -52,7 +52,10 @@ setup(
 
     test_suite='tests',
 
-    tests_require=['pytest'],
+    tests_require=[
+        'pytest',
+        'freezegun',
+    ],
 
     classifiers=[
         # As in https://pypi.python.org/pypi?:action=list_classifiers
