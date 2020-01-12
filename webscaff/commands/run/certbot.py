@@ -52,3 +52,14 @@ def dump(ctx, target_dir):
         target_dir,
         do_sudo=True
     )
+
+
+def restore(ctx, source_dir):
+    """Restores Certbot related stuff from a source directory."""
+
+    sys_fs.gzip_extract(
+        ctx,
+        archive=source_dir / 'certbot.tar.gz',
+        target_dir='/etc/letsencrypt',
+        do_sudo=True
+    )

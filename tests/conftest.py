@@ -36,6 +36,9 @@ class MockContext(Context):
         context_commands.append('cd %s' % path)
         return super().cd(path)
 
+    def put(self, what, where):
+        context_commands.append('put %s %s' % (what, where))
+
 
 class MockExecutor(Executor):
 
@@ -53,9 +56,9 @@ def run_command_mock(monkeypatch):
 
     from webscaff.cli import program
 
-    def run_command_mock_(command):
+    def run_command_mock_(command, *args):
         try:
-            program.run(['webscaff', command], exit=False)
+            program.run(['webscaff', command] + list(args), exit=False)
             commands = list(context_commands)
             return commands
         finally:

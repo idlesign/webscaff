@@ -3,7 +3,7 @@ from freezegun import freeze_time
 
 class TestProj:
 
-    def test_dump(self, run_command_mock, ):
+    def test_dump(self, run_command_mock):
 
         with freeze_time('2020-01-11T11:55'):
 
@@ -16,6 +16,21 @@ class TestProj:
                 'rm -rf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump.tar.gz',
                 'rm -rf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump',
             ]
+
+    def test_restore(self, run_command_mock):
+        assert run_command_mock('run.restore', '/nonexistent') == []
+        assert run_command_mock('run.restore', '/tmp') == [
+            'put /tmp /var/lib/mydemo/dumps/tmp',
+            'mkdir -p /var/lib/mydemo/dumps/tmp',
+            'tar -xzf /var/lib/mydemo/dumps/tmp -C /var/lib/mydemo/dumps/tmp',
+            'rm -rf /var/lib/mydemo/dumps/tmp',
+            'mkdir -p /var/lib/mydemo/media',
+            'tar -xzf /var/lib/mydemo/dumps/tmp/media.tar.gz -C /var/lib/mydemo/media',
+            'mkdir -p /etc/letsencrypt',
+            'tar -xzf /var/lib/mydemo/dumps/tmp/certbot.tar.gz -C /etc/letsencrypt',
+            'pg_restore --clean --create -d mydemo /var/lib/mydemo/dumps/tmp/db.dump',
+            'rm -rf /var/lib/mydemo/dumps/tmp',
+        ]
 
     def test_bootstrap(self, run_command_mock, monkeypatch):
         monkeypatch.setattr('webscaff.commands.utils.rsync_patchwork', lambda *args, **kwargs: None)

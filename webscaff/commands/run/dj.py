@@ -81,3 +81,13 @@ def dump(ctx, target_dir):
         ctx.paths.remote.project.state.media,
         target_dir,
     )
+
+
+def restore(ctx, source_dir):
+    """Restores Django related stuff from a source directory."""
+
+    sys_fs.gzip_extract(
+        ctx,
+        archive=source_dir / 'media.tar.gz',
+        target_dir=ctx.paths.remote.project.state.media
+    )

@@ -19,6 +19,11 @@ def dump(ctx, target_dir):
     sys_pg.dump(ctx, ctx.project.name, target_dir=target_dir)
 
 
+def restore(ctx, source_dir):
+    """Restores project Database from a backup directory."""
+    sys_pg.restore(ctx, ctx.project.name, source_dir=source_dir)
+
+
 @task
 def psql(ctx, command=None):
     """Launches psql command line utility.

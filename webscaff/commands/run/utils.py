@@ -77,3 +77,29 @@ def backup(ctx):
     finally:
         # Remove dumps subdir.
         sys_fs.rm(ctx, path_dump)
+
+
+def restore(ctx, backup):
+    """Restores project related data from a backup file."""
+    backup = Path(backup).absolute()
+
+    if not backup.exists():
+        echo("Backup file doesn't exist: %s" % backup)
+        return
+
+    path_dumps = Path(ctx.paths.remote.project.state.dumps)
+    path_remote_archive = path_dumps / backup.name
+
+    echo('Uploading %s ...' % backup)
+
+    ctx.put('%s' % backup, '%s' % path_remote_archive)
+    path_remote = sys_fs.gzip_extract(ctx, path_remote_archive)
+
+    try:
+        sys_fs.rm(ctx, path_remote_archive)
+        dj.restore(ctx, path_remote)
+        certbot.restore(ctx, path_remote)
+        pg.restore(ctx, path_remote)
+
+    finally:
+        sys_fs.rm(ctx, path_remote)

@@ -43,12 +43,25 @@ def dump(ctx, db_name, target_dir, binary=True):
     """Dumps DB by name into target directory."""
     sudo_pg = partial(ctx.sudo, user='postgres')
 
-    target_path = Path(target_dir) / ('db.' + ('dump' if binary else 'sql'))
+    target_path = Path(target_dir) / 'db.dump'
     fmt = '-Fc' if binary else ''
 
     sudo_pg('pg_dump %s %s > %s' % (fmt, db_name, target_path))
 
     return target_path
+
+
+def restore(ctx, db_name, source_dir):
+    """Restores DB from a file."""
+    sudo_pg = partial(ctx.sudo, user='postgres')
+
+    source_path = Path(source_dir) / 'db.dump'
+
+    echo('Restoring DB dump from %s ...' % source_path)
+
+    sudo_pg('pg_restore --clean --create -d %s %s' % (db_name, source_path))
+
+    return source_path
 
 
 def configure(ctx, project_name, project_user):

@@ -90,7 +90,21 @@ def rm(ctx, target, force=True):
     ctx.sudo('rm -r%s %s' % ('f' if force else '', target))
 
 
-@task
+def gzip_extract(ctx, archive, target_dir=None, do_sudo=False):
+    """Extracts gzipped archive into a current directory."""
+
+    target_dir = target_dir or archive.with_name(archive.name.replace('.tar.gz', ''))
+
+    mkdir(ctx, target_dir)
+
+    echo('Extract into %s ...' % target_dir)
+
+    method = ctx.sudo if do_sudo else ctx.run
+    method('tar -xzf %s -C %s' % (archive, target_dir))
+
+    return target_dir
+
+
 def gzip_dir(ctx, src, target_fname, do_sudo=False):
     """GZips a directory."""
     target_fname = str(target_fname)
