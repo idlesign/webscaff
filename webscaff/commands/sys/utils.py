@@ -3,6 +3,7 @@ from invoke import task
 from ..utils import echo
 
 
+@task
 def reboot(ctx):
     """Reboots remote immediately."""
     ctx.sudo('shutdown -r now')
