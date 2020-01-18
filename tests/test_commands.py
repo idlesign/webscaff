@@ -114,4 +114,4 @@ class TestSys:
 
     def test_reboot(self, run_command_mock):
 
-        assert run_command_mock('reboot') == ['shutdown -r now']
+        assert run_command_mock('sys.utils.reboot') == ['shutdown -r now']
