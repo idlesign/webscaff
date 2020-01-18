@@ -66,7 +66,7 @@ def bootstrap(ctx):
         title='Django',
         name_local='django.py',
         name_remote='settings_production.py',
-        dir_remote_confs=Path(ctx.paths.remote.project.base) / ctx.project.name / 'settings'
+        dir_remote_confs=Path(ctx.paths.remote.project.base) / 'settings'
     )
 
     migrate(ctx)

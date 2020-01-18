@@ -17,7 +17,7 @@ def bootstrap(ctx):
         python_path=ctx.python,
         venv_dir=ctx.paths.remote.project.venv.root)
 
-    with ctx.cd(ctx.paths.remote.project.base):
+    with ctx.cd(ctx.paths.remote.project.home):
         install(ctx, package='.', editable=True)
         install(ctx, package='wheel')
         install(ctx, from_req=True)

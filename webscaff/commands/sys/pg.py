@@ -53,13 +53,15 @@ def dump(ctx, db_name, target_dir, binary=True):
 
 def restore(ctx, db_name, source_dir):
     """Restores DB from a file."""
-    sudo_pg = partial(ctx.sudo, user='postgres')
+    sudo_pg = partial(ctx.sudo, user='postgres', warn=True)
 
     source_path = Path(source_dir) / 'db.dump'
 
     echo('Restoring DB dump from %s ...' % source_path)
 
-    sudo_pg('pg_restore --clean --create -d %s %s' % (db_name, source_path))
+    sudo_pg('dropdb %s' % db_name)
+    sudo_pg('createdb %s' % db_name)
+    sudo_pg('pg_restore --dbname %s %s' % (db_name, source_path))
 
     return source_path
 

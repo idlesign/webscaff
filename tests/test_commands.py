@@ -28,7 +28,9 @@ class TestProj:
             'tar -xzf /var/lib/mydemo/dumps/tmp/media.tar.gz -C /var/lib/mydemo/media',
             'mkdir -p /etc/letsencrypt',
             'tar -xzf /var/lib/mydemo/dumps/tmp/certbot.tar.gz -C /etc/letsencrypt',
-            'pg_restore --clean --create -d mydemo /var/lib/mydemo/dumps/tmp/db.dump',
+            'dropdb mydemo',
+            'createdb mydemo',
+            'pg_restore --dbname mydemo /var/lib/mydemo/dumps/tmp/db.dump',
             'rm -rf /var/lib/mydemo/dumps/tmp',
         ]
 
@@ -72,7 +74,7 @@ class TestProj:
             'ln -sf /var/cache/mydemo ~/mydemo/cache',
             'test -e "$(echo /srv/mydemo/.git)"',
             'test -e "$(echo /srv/mydemo/venv)"',
-            'cd /srv/mydemo/mydemo',
+            'cd /srv/mydemo',
             'pip3 install -e .',
             'pip3 install  wheel',
             'pip3 install  -r requirements.txt',
@@ -88,7 +90,7 @@ class TestProj:
             'mkdir -p /var/lib/mydemo/media',
             'chown -R mydemo:mydemo /var/lib/mydemo/media',
             'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /var/lib/mydemo/media',
-            'ln -sf /srv/mydemo/conf/django.py /srv/mydemo/mydemo/mydemo/settings/settings_production.py',
+            'ln -sf /srv/mydemo/conf/django.py /srv/mydemo/mydemo/settings/settings_production.py',
             'mydemo migrate',
             'mydemo createsuperuser --email idlesign@some.com --username idlesign',
             'touch /var/lib/mydemo/reloader',
