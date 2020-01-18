@@ -77,7 +77,7 @@ class TestProj:
             'cd /srv/mydemo',
             'pip3 install -e .',
             'pip3 install  wheel',
-            'pip3 install  -r requirements.txt',
+            'pip3 install  -r /srv/mydemo/requirements.txt',
             'ln -sf /srv/mydemo/venv/bin/mydemo /usr/bin/mydemo',
             'pg_config --version',
             'createdb mydemo',

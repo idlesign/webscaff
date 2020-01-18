@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+from pathlib import Path
 
 from invoke import task
 
@@ -57,7 +58,7 @@ def install(ctx, package='', update=False, from_req=False, editable=False):
     editable and flags.append('-e')
 
     if from_req:
-        package = '-r %s' % PIP_REQUIREMENTS_FILENAME
+        package = '-r %s' % (Path(ctx.paths.remote.project.home) / PIP_REQUIREMENTS_FILENAME)
 
     if not isinstance(package, list):
         package = [package]
@@ -67,9 +68,13 @@ def install(ctx, package='', update=False, from_req=False, editable=False):
 
 
 @task
-def upgrade(ctx, package):
-    """Upgrades a package."""
-    install(ctx, package=package, update=True)
+def upgrade(ctx, package=''):
+    """Upgrades a package.
+
+    If not package name provided upgrades all packages listed in requirements file.
+
+    """
+    install(ctx, package=package, update=True, from_req=not package)
 
 
 @task
