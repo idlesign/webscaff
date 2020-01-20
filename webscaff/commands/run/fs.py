@@ -33,7 +33,6 @@ def symlink_home(ctx):
         ctx.sudo(get_symlink_command(dir_, '%s/%s' % (home_linkroot, linkname)))
 
 
-@task
 def upload_configs(ctx):
     """Uploads project configuration files (under `conf` dir) to remote."""
 
