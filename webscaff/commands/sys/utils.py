@@ -29,6 +29,8 @@ def info(ctx):
     ctx.run('uptime')
     echo('')
     ctx.run('df -h')
+    echo('')
+    ctx.sudo('journalctl --disk-usage')
 
 
 @task
