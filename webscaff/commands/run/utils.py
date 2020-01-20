@@ -1,3 +1,4 @@
+from uuid import uuid4
 from datetime import datetime
 from os import makedirs
 from pathlib import Path
@@ -103,3 +104,25 @@ def restore(ctx, backup):
 
     finally:
         sys_fs.rm(ctx, path_remote)
+
+
+def py(ctx, filepath):
+    """Run given file with Python script on remote."""
+
+    script = Path(filepath).absolute()
+
+    if not script.exists():
+        echo("File doesn't exist: %s" % script)
+        return
+
+    path_temp = Path(ctx.paths.remote.temp)
+    path_remote_script = path_temp / str(uuid4())
+
+    ctx.put('%s' % script, '%s' % path_remote_script)
+
+    try:
+        with venv.venv_context(ctx):
+            ctx.run('python %s' % path_remote_script, warn=True)
+
+    finally:
+        sys_fs.rm(ctx, path_remote_script)
