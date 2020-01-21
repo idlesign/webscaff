@@ -54,7 +54,9 @@ def install(ctx, package='', update=False, from_req=False, editable=False):
     """
     flags = []
 
-    update and flags.append('-U')
+    if update:
+        flags.extend(['-U', '--no-cache-dir'])
+
     editable and flags.append('-e')
 
     if from_req:
