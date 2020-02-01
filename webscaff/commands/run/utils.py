@@ -37,9 +37,18 @@ def bootstrap(ctx):
     sys_utils.reboot(ctx)
 
 
-def rollout(ctx):
-    """Updates remote files from remote repository and rolls out project."""
+def rollout(ctx, upgrade_venv=False):
+    """Updates remote files from remote repository and rolls out project.
+
+    :param ctx:
+    :param upgrade_venv: Whether to update venv using requirements file.
+
+    """
     git.pull(ctx)
+
+    if upgrade_venv:
+        venv.upgrade(ctx)
+
     dj.rollout(ctx)
     uwsgi.reload_touch(ctx)
 
