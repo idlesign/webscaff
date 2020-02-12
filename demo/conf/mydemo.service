@@ -1,0 +1,50 @@
+# Place into:   /etc/systemd/system/mydemo.service
+# Setup:        sudo systemctl enable $PWD/mydemo.service
+# Start:        sudo systemctl start mydemo.service
+# Stop:         sudo systemctl stop mydemo.service
+# Restart:      sudo systemctl restart mydemo.service
+# Status:       systemctl status mydemo.service
+# Journal:      journalctl -fu mydemo.service
+
+[Unit]
+Description=mydemo webscaff service
+Wants=network-online.target
+After=network-online.target
+
+
+[Service]
+ExecStart=/usr/bin/mydemo uwsgi_run
+Restart=on-failure
+KillSignal=SIGTERM
+Type=notify
+NotifyAccess=all
+# Bind to priviledged ports.
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+CPUAccounting=yes
+MemoryAccounting=yes
+IOAccounting=yes
+IPAccounting=yes
+PrivateTmp=yes
+RemoveIPC=yes
+TasksAccounting=yes
+
+ProtectSystem=strict
+ProtectHome=read-only
+
+User=mydemo
+Group=mydemo
+
+# /run/
+RuntimeDirectory=mydemo
+# /var/lib/
+StateDirectory=mydemo
+# /var/log/
+LogsDirectory=mydemo
+# /var/cache/
+CacheDirectory=mydemo
+
+
+[Install]
+WantedBy=multi-user.target
+
