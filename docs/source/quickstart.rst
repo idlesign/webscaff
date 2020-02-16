@@ -103,3 +103,50 @@ The initialization process is done in to steps. Please follow the instructions.
 
 If you're lucky after this step is done you're be able to access you webservice
 using your domain name both via HTTP and HTTPS.
+
+
+7. Basic usage
+~~~~~~~~~~~~~~
+
+1. Develop your code locally. Use virtual environment from `venv/` directory.
+2. Push a new version to remote repository.
+3. Rollout that version on server right from the repository:
+
+  .. code-block:: bash
+
+      $ webscaff rollout
+
+  This will get code from the repository, gather Django static files, apply
+  DB migrations and reload uWSGI.
+
+
+4. If you want to get a backup (user media, DB, certificates) locally:
+
+
+  .. code-block:: bash
+
+      $ webscaff run.backup
+
+  Backup archives are stored in `state/dumps` directory.
+
+5. Other basic commads:
+
+
+  .. code-block:: bash
+
+      ; Put project into maintenance mode -
+      ; display static page for users.
+      $ webscaff off
+      ; Quit maintenance mode.
+      $ webscaff on
+
+      ; Get project service status.
+      $ webscaff status
+      ; Restart project service.
+      $ webscaff restart
+
+      ; Show current project log.
+      $ webscaff log
+
+
+5. Run `webscaff` without arguments to get available commands list.

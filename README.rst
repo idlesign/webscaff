@@ -63,7 +63,20 @@ After install the ``webscaff`` command is available.
     $ webscaff run.initialize
 
 
-Detailed instructions are in the documentation.
+Webscaff offers a number of useful command, among them:
+
+.. code-block:: bash
+
+    ; Rollout a new version of yor project from repository.
+    $ webscaff rollout
+
+    ; Make a backup and download to local directory.
+    $ webscaff run.backup
+
+
+More command are available.
+
+Detailed instructions could be found in the documentation.
 
 
 Documentation
