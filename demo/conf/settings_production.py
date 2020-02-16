@@ -1,1 +1,0 @@
-# Some settings for Django.

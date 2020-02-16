@@ -64,8 +64,8 @@ def bootstrap(ctx):
     link_config(
         ctx,
         title='Django',
-        name_local='settings_production.py',
-        name_remote='settings_production.py',
+        name_local='env_production.py',
+        name_remote='env_production.py',
         dir_remote_confs=Path(ctx.paths.remote.project.base) / 'settings'
     )
 

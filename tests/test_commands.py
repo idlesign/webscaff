@@ -90,7 +90,7 @@ class TestProj:
             'mkdir -p /var/lib/mydemo/media',
             'chown -R mydemo:mydemo /var/lib/mydemo/media',
             'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /var/lib/mydemo/media',
-            'ln -sf /srv/mydemo/conf/settings_production.py /srv/mydemo/mydemo/settings/settings_production.py',
+            'ln -sf /srv/mydemo/conf/env_production.py /srv/mydemo/mydemo/settings/env_production.py',
             'mydemo migrate',
             'mydemo createsuperuser --email idlesign@some.com --username idlesign',
             'touch /var/lib/mydemo/reloader',
