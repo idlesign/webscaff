@@ -70,7 +70,7 @@ template of ``makeapp`` - https://pypi.org/project/makeapp:
 
 This will run ``myproject`` skeleton creation in ``/home/some/here``.
 
-You'll be asked for information you gathered on previous steps.
+You'll be asked for information you gathered in previous steps.
 
 ``makeapp`` will also ask you for a code repository address (step 2).
 
@@ -99,9 +99,9 @@ Now we're ready for remote system initialization:
     $ webscaff run.initialize
 
 
-The initialization process is done in to steps. Please follow the instructions.
+The initialization process is done in two steps. Please follow the instructions.
 
-If you're lucky after this step is done you're be able to access you webservice
+If you're lucky after this step you'll be able to access you webservice
 using your domain name both via HTTP and HTTPS.
 
 
