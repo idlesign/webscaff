@@ -28,7 +28,6 @@ def test_defaults():
     assert project.user == 'testme'
     assert project.group == 'testme'
     assert project.repo == 'https://repome'
-    assert not project.repo_slim
     assert project.domain == ''
     assert project.email == ''
 

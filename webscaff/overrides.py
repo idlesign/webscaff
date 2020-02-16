@@ -60,7 +60,7 @@ class WebscaffConfig(Config):
             paths.base = str(home_remote / project_name)
 
         if not self.paths.remote.repo:
-            self.paths.remote.repo = paths.base if self.project.repo_slim else paths.home
+            self.paths.remote.repo = paths.home
 
         if not paths.venv.root:
             paths.venv.root = str(home_remote / 'venv')
@@ -105,7 +105,6 @@ class WebscaffConfig(Config):
                 'user': None,
                 'group': None,
                 'repo': None,  # url
-                'repo_slim': False,  # slim if no conf/ dir and etc.
                 'domain': '',
                 'email': '',
             },

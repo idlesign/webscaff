@@ -15,7 +15,7 @@ def bootstrap(ctx):
             ctx,
             path_base=ctx.paths.remote.project.home,
             repo_url=project.repo,
-            dir_target=project.name if project.repo_slim else '.')
+            dir_target='.')
 
 
 def pull(ctx):
