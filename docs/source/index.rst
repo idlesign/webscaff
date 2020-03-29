@@ -43,5 +43,4 @@ Table of Contents
     :maxdepth: 4
 
     quickstart
-
-
+    faq
