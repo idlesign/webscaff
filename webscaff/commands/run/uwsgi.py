@@ -1,7 +1,6 @@
 from contextlib import contextmanager
 
-from invoke import task
-
+from .fs import create_dir
 from ..sys import fs
 
 
@@ -16,7 +15,7 @@ def bootstrap(ctx):
     # Create touch reload file.
     fs.touch(ctx, ctx.paths.remote.project.state.reloader)
     # Add spooler directory.
-    fs.mkdir(ctx, ctx.paths.remote.project.state.spool)
+    create_dir(ctx, ctx.paths.remote.project.state.spool)
 
 
 def on_503(ctx):
