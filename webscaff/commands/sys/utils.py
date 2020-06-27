@@ -22,6 +22,8 @@ def set_locale(ctx, locale='ru_RU'):
 
 def info(ctx):
     """Prints out remote system information, including kernel info and timezone."""
+    ctx.run('who')
+    echo('')
     ctx.run('uname -a')
     echo('')
     ctx.run('cat /etc/timezone')
