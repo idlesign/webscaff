@@ -64,10 +64,16 @@ def create_dir(ctx, path):
 
 
 @task
-def cache_init(ctx):
-    """Initializes cache directory. Drops if already exists."""
+def cache_init(ctx, drop=False):
+    """Initializes cache directory.
+
+    :param ctx:
+    :param drop: If True - drops if already exists. Otherwise - empties.
+
+    """
     dir_cache = ctx.paths.remote.cache
-    sys_fs.rm(ctx, '%s*' % dir_cache)
+    command = '%s*' if drop else '%s/*'
+    sys_fs.rm(ctx, command % dir_cache)
     create_dir(ctx, dir_cache)
 
 
@@ -88,7 +94,7 @@ def bootstrap(ctx):
     for dir_ in dirs:
         create_dir(ctx, dir_)
 
-    cache_init(ctx)
+    cache_init(ctx, drop=True)
     create_environ_file(ctx)
 
     symlink_home(ctx)

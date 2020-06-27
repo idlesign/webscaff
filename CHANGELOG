@@ -2,6 +2,11 @@ webscaff changelog
 ==================
 
 
+Unreleased
+----------
++ 'cache_init' now just empties cache directory by default.
+
+
 v0.1.0 [2020-02-16]
 -------------------
 + Basic functionality.
