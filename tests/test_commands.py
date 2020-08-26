@@ -95,6 +95,8 @@ class TestProj:
             'mydemo createsuperuser --email idlesign@some.com --username idlesign',
             'touch /var/lib/mydemo/reloader',
             'mkdir -p /var/lib/mydemo/spool',
+            'chown -R mydemo:mydemo /var/lib/mydemo/spool',
+            'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /var/lib/mydemo/spool',
             'systemctl enable --now /srv/mydemo/conf/mydemo.service',
             'mkdir -p /var/lib/mydemo/certbot',
             'chown -R mydemo:mydemo /var/lib/mydemo/certbot',
@@ -110,7 +112,7 @@ class TestSys:
     def test_info(self, run_command_mock):
 
         assert run_command_mock('info') == [
-            'uname -a', 'cat /etc/timezone', 'uptime', 'df -h', 'journalctl --disk-usage']
+            'who', 'uname -a', 'cat /etc/timezone', 'uptime', 'df -h', 'journalctl --disk-usage']
 
     def test_reboot(self, run_command_mock):
 
