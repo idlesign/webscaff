@@ -2,8 +2,8 @@ webscaff changelog
 ==================
 
 
-Unreleased
-----------
+v0.2.0 [2020-09-20]
+-------------------
 + 'cache_init' now just empties cache directory by default.
 + 'info' now prints out current user information.
 * Bootstrap spooler directory with right permissions.
