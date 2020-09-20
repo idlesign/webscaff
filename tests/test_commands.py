@@ -101,8 +101,13 @@ class TestProj:
             'mkdir -p /var/lib/mydemo/certbot',
             'chown -R mydemo:mydemo /var/lib/mydemo/certbot',
             'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX" /var/lib/mydemo/certbot',
+            'certbot',
             'ln -sf /srv/mydemo/conf/mydemo-certbot-hook.sh /etc/letsencrypt/renewal-hooks/deploy/mydemo',
             'certbot --agree-tos --no-eff-email --email idlesign@some.com certonly --webroot -d mydemo.here -w /var/lib/mydemo/certbot',
+            'setfacl -Rm "g:mydemo:--x" /etc/letsencrypt/archive/',
+            'setfacl -Rm "g:mydemo:r-x" /etc/letsencrypt/archive/mydemo.here/',
+            'setfacl -Rm "g:mydemo:--x" /etc/letsencrypt/live/',
+            'setfacl -Rm "g:mydemo:r-x" /etc/letsencrypt/live/mydemo.here/',
             'shutdown -r now',
         ]
 

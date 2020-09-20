@@ -70,9 +70,13 @@ template of ``makeapp`` - https://pypi.org/project/makeapp:
 
 This will run ``myproject`` skeleton creation in ``/home/some/here``.
 
+.. warning:: It is advised to *not to use* the same name you're logged in as a project name to avoid confusion.
+
 You'll be asked for information you gathered in previous steps.
 
 ``makeapp`` will also ask you for a code repository address (step 2).
+
+.. note:: If you preferred to push your repository manually do not forget to do it before going further.
 
 
 6. Remote initialization
