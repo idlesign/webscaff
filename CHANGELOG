@@ -2,8 +2,8 @@ webscaff changelog
 ==================
 
 
-Unreleased
-----------
+v0.3.1 [2021-01-15]
+-------------------
 * Fix 'run.initialize' command permission error.
 
 
