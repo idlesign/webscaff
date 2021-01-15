@@ -59,7 +59,7 @@ def create_dir(ctx, path):
 
     # Grant project group full access.
     sys_fs.setfacl(
-        ctx, path, 'g:%(group)s:rwX,d:g:%(group)s:rwX' % {'group': group},
+        ctx, path, f'g:{group}:rwX,d:g:{group}:rwX,m:rwx',
         modify=True)
 
 
