@@ -1,3 +1,5 @@
+import json
+
 from uuid import uuid4
 from datetime import datetime
 from os import makedirs
@@ -6,6 +8,17 @@ from pathlib import Path
 from . import fs, dj, service, uwsgi, venv, git, certbot, pg
 from ..sys import usr, apt, utils as sys_utils, fs as sys_fs
 from ..utils import echo
+
+
+def cfg(ctx):
+    """Prints out webscaff configuration."""
+
+    config = ctx.config._config
+
+    echo(json.dumps({
+        'project': config['project'],
+        'paths': config['paths'],
+    }, ensure_ascii=False, indent='  '))
 
 
 def bootstrap(ctx):

@@ -1,6 +1,14 @@
 from freezegun import freeze_time
 
 
+class TestUtils:
+
+    def test_cfg(self, run_command_mock, capsys):
+        assert run_command_mock('cfg') == []
+        read = capsys.readouterr()
+        assert '"name": "mydemo"' in read.out
+
+
 class TestProj:
 
     def test_dump(self, run_command_mock):
