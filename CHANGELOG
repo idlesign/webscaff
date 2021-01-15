@@ -4,7 +4,9 @@ webscaff changelog
 
 Unreleased
 ----------
++ New 'cfg' command.
 * Enhance 'run.initialize' command: save progress to be able to resume.
+* Enhance 'sys.cat' command: add 'printout' param.
 
 
 v0.2.1 [2020-10-12]
