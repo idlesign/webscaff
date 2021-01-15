@@ -1,6 +1,5 @@
 from pathlib import Path
 from uuid import uuid4
-
 from invoke import task
 from patchwork.files import append, exists
 
@@ -8,9 +7,15 @@ from ..utils import echo, cd_sudo
 
 
 @task
-def cat(ctx, path):
-    """Outputs file content."""
-    ctx.sudo('cat %s' % path)
+def cat(ctx, path, printout=True):
+    """Outputs file content.
+
+    :param ctx:
+    :param path: Filepath to read.
+    :param printout: Whether to print to console.
+
+    """
+    return ctx.sudo(f'cat {path}', hide=not printout).stdout
 
 
 def append_to_file(ctx, filepath, contents):
