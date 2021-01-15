@@ -2,8 +2,8 @@ webscaff changelog
 ==================
 
 
-Unreleased
-----------
+v0.3.0 [2021-01-15]
+-------------------
 + New 'cfg' command.
 * Enhance 'run.initialize' command: save progress to be able to resume.
 * Enhance 'sys.cat' command: add 'printout' param.
