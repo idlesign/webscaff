@@ -17,9 +17,6 @@ https://github.com/idlesign/webscaff
     :target: https://coveralls.io/r/idlesign/webscaff
 
 
-**Work in progress. Stay tuned.**
-
-
 Description
 -----------
 
