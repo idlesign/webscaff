@@ -19,7 +19,7 @@ def manage(ctx, cmd):
 
     project_name = ctx.project.name
     for command in cmd:
-        ctx.sudo('%s %s' % (project_name, command), pty=True, user=project_name)
+        ctx.sudo(f'{project_name} {command}', pty=True, user=project_name)
 
 
 def rollout(ctx):
@@ -46,9 +46,9 @@ def create_superuser(ctx):
     email = ctx.project.email or ''
     if email:
         username = email.partition('@')[0]
-        command += ' --email %s --username %s' % (email, username)
+        command += f' --email {email} --username {username}'
 
-    echo('\nCreating Django superuser %s ...' % ('[%s]' % username) if username else '')
+    echo('\nCreating Django superuser %s ...' % f'[{username}]' if username else '')
 
     manage(ctx, command)
 

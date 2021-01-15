@@ -23,7 +23,7 @@ def collection_from_sub(filepath, name):
     def contribute(items):
 
         for item in items:
-            module = import_module('.%s' % item.stem, name)
+            module = import_module(f'.{item.stem}', name)
             ns.add_collection(module)
 
     dir_packages = [path.parent for path in dir_base.glob('*/__init__.py')]

@@ -26,7 +26,7 @@ def link_config(ctx, *, title, name_local, name_remote, dir_remote_confs):
 
         return True
 
-    echo('No %s configuration. Expected: %s' % (title, config_local))
+    echo(f'No {title} configuration. Expected: {config_local}')
 
     return False
 
@@ -43,7 +43,7 @@ def rsync(ctx, *args, **kwargs):
 
 def cd_sudo(cd, command):
     # https://github.com/pyinvoke/invoke/issues/459
-    return 'bash -c "cd %s && %s"' % (cd, command)
+    return f'bash -c "cd {cd} && {command}"'
 
 
 def get_symlink_command(src, dest):
@@ -53,4 +53,4 @@ def get_symlink_command(src, dest):
     :param dest: Link filepath
 
     """
-    return 'ln -sf %s %s' % (src, dest)
+    return f'ln -sf {src} {dest}'

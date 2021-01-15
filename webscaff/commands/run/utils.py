@@ -98,10 +98,7 @@ def backup(ctx):
     makedirs(path_dump_local, exist_ok=True)
 
     path_dumps = Path(ctx.paths.remote.project.state.dumps)
-    path_dump = path_dumps / ('%s-%s_dump' % (
-        datetime.now().strftime('%Y-%m-%dT%H%M'),
-        ctx.project.name
-    ))
+    path_dump = path_dumps / f"{datetime.now().strftime('%Y-%m-%dT%H%M')}-{ctx.project.name}_dump"
 
     # Create a subdirectory in dumps.
     sys_fs.mkdir(ctx, path_dump)
@@ -137,9 +134,9 @@ def restore(ctx, backup):
     path_dumps = Path(ctx.paths.remote.project.state.dumps)
     path_remote_archive = path_dumps / backup.name
 
-    echo('Uploading %s ...' % backup)
+    echo(f'Uploading {backup} ...')
 
-    ctx.put('%s' % backup, '%s' % path_remote_archive)
+    ctx.put(f'{backup}', f'{path_remote_archive}')
     path_remote = sys_fs.gzip_extract(ctx, path_remote_archive)
 
     try:
@@ -164,11 +161,11 @@ def py(ctx, filepath):
     path_temp = Path(ctx.paths.remote.temp)
     path_remote_script = path_temp / str(uuid4())
 
-    ctx.put('%s' % script, '%s' % path_remote_script)
+    ctx.put(f'{script}', f'{path_remote_script}')
 
     try:
         with venv.venv_context(ctx):
-            ctx.run('python %s' % path_remote_script, warn=True)
+            ctx.run(f'python {path_remote_script}', warn=True)
 
     finally:
         sys_fs.rm(ctx, path_remote_script)

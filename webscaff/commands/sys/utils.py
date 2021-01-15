@@ -15,9 +15,9 @@ def set_locale(ctx, locale='ru_RU'):
     Default: ru_Ru
 
     """
-    ctx.sudo('locale-gen "%s.UTF-8"' % locale)
+    ctx.sudo(f'locale-gen "{locale}.UTF-8"')
     ctx.sudo('dpkg-reconfigure locales')
-    ctx.sudo('update-locale LC_ALL=%(locale)s.UTF-8 LANG=%(locale)s.UTF-8' % {'locale': locale})
+    ctx.sudo(f'update-locale LC_ALL={locale}.UTF-8 LANG={locale}.UTF-8')
 
 
 def info(ctx):

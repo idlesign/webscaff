@@ -28,7 +28,7 @@ def get_version(ctx):
     """Returns a list with PostgreSQL version number."""
     number = ctx.run('pg_config --version').stdout.strip()
     number = number.split(' ')[:2][-1].split('.')
-    echo('PostgreSQL version: %s' % number)
+    echo(f'PostgreSQL version: {number}')
     return number
 
 
@@ -36,7 +36,7 @@ def get_version(ctx):
 def log_main(ctx):
     """Tails main PostgreSQL log."""
     version = [chunk for chunk in get_version(ctx)[:2] if int(chunk)]  # 9.4, but 10
-    tail(ctx, '/var/log/postgresql/postgresql-%s-main.log' % '.'.join(version))
+    tail(ctx, f"/var/log/postgresql/postgresql-{'.'.join(version)}-main.log")
 
 
 def dump(ctx, db_name, target_dir, binary=True):
@@ -46,7 +46,7 @@ def dump(ctx, db_name, target_dir, binary=True):
     target_path = Path(target_dir) / 'db.dump'
     fmt = '-Fc' if binary else ''
 
-    sudo_pg('pg_dump %s %s > %s' % (fmt, db_name, target_path))
+    sudo_pg(f'pg_dump {fmt} {db_name} > {target_path}')
 
     return target_path
 
@@ -57,11 +57,11 @@ def restore(ctx, db_name, source_dir):
 
     source_path = Path(source_dir) / 'db.dump'
 
-    echo('Restoring DB dump from %s ...' % source_path)
+    echo(f'Restoring DB dump from {source_path} ...')
 
-    sudo_pg('dropdb %s' % db_name)
-    sudo_pg('createdb %s' % db_name)
-    sudo_pg('pg_restore --dbname %s %s' % (db_name, source_path))
+    sudo_pg(f'dropdb {db_name}')
+    sudo_pg(f'createdb {db_name}')
+    sudo_pg(f'pg_restore --dbname {db_name} {source_path}')
 
     return source_path
 
@@ -71,9 +71,9 @@ def configure(ctx, project_name, project_user):
 
     version_ = '.'.join(get_version(ctx)[:-1])
 
-    path_confs = Path('/etc/postgresql/%s/main/' % version_)
+    path_confs = Path(f'/etc/postgresql/{version_}/main/')
     config_name = 'postgresql.conf'
-    target_name = '%s.conf' % project_name
+    target_name = f'{project_name}.conf'
 
     config_linked = link_config(
         ctx,
@@ -85,14 +85,14 @@ def configure(ctx, project_name, project_user):
 
     if config_linked:
         # Append into main config an include line.
-        append_to_file(ctx, path_confs / config_name, "include = '%s'" % target_name)
+        append_to_file(ctx, path_confs / config_name, f"include = '{target_name}'")
 
     def create_db_and_user():
         sudo_pg = partial(ctx.sudo, user='postgres')
 
-        sudo_pg('createdb %s' % project_name, warn=True)
-        sudo_pg('createuser %s' % project_user)  # No password. Using Unix domain sockets.
-        sudo_pg('psql -c "GRANT ALL PRIVILEGES ON DATABASE %s TO %s"' % (project_name, project_user))
+        sudo_pg(f'createdb {project_name}', warn=True)
+        sudo_pg(f'createuser {project_user}')  # No password. Using Unix domain sockets.
+        sudo_pg(f'psql -c "GRANT ALL PRIVILEGES ON DATABASE {project_name} TO {project_user}"')
 
     create_db_and_user()
 

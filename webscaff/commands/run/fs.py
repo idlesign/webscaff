@@ -19,7 +19,7 @@ def create_environ_file(ctx, type_marker='production'):
 def symlink_home(ctx):
     """Create a directory with project-related symlinks in user's home."""
 
-    home_linkroot = '~/%s' % ctx.project.name
+    home_linkroot = f'~/{ctx.project.name}'
 
     sys_fs.mkdir(ctx, home_linkroot)
 
@@ -30,7 +30,7 @@ def symlink_home(ctx):
     ]
 
     for dir_, linkname in dir_map:
-        ctx.sudo(get_symlink_command(dir_, '%s/%s' % (home_linkroot, linkname)))
+        ctx.sudo(get_symlink_command(dir_, f'{home_linkroot}/{linkname}'))
 
 
 def upload_configs(ctx):
@@ -42,7 +42,7 @@ def upload_configs(ctx):
         rsync(ctx, source, ctx.paths.remote.configs, delete=True)
 
     else:
-        echo('No configuration files uploaded. Expected: %s' % source)
+        echo(f'No configuration files uploaded. Expected: {source}')
 
 
 def create_dir(ctx, path):

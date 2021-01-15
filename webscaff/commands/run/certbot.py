@@ -40,11 +40,11 @@ def get_certificate(ctx):
     webroot = ctx.paths.remote.project.state.certbot
 
     if email:
-        email = '--email %s' % email
+        email = f'--email {email}'
 
     command = (
-        'certbot --agree-tos --no-eff-email %s certonly --webroot -d %s -w %s' %
-        (email, domain, webroot))
+        f'certbot --agree-tos --no-eff-email {email} certonly '
+        f'--webroot -d {domain} -w {webroot}')
 
     ctx.sudo(command)
 

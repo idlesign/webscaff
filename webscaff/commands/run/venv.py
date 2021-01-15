@@ -30,15 +30,15 @@ def symlink_entypoint(ctx):
     """Create a system-wide symlink to a project entrypoint."""
     project_name = ctx.project.name
     ctx.sudo(get_symlink_command(
-        '%s/%s' % (ctx.paths.remote.project.venv.bin, project_name),
-        '/usr/bin/%s' % project_name))
+        f'{ctx.paths.remote.project.venv.bin}/{project_name}',
+        f'/usr/bin/{project_name}'))
 
 
 @contextmanager
 def venv_context(ctx):
     """Temporarily switches into virtual environment."""
 
-    with ctx.prefix('. %s/activate' % ctx.paths.remote.project.venv.bin):
+    with ctx.prefix(f'. {ctx.paths.remote.project.venv.bin}/activate'):
         yield
 
 
@@ -60,13 +60,13 @@ def install(ctx, package='', update=False, from_req=False, editable=False):
     editable and flags.append('-e')
 
     if from_req:
-        package = '-r %s' % (Path(ctx.paths.remote.project.home) / PIP_REQUIREMENTS_FILENAME)
+        package = f'-r {Path(ctx.paths.remote.project.home) / PIP_REQUIREMENTS_FILENAME}'
 
     if not isinstance(package, list):
         package = [package]
 
     with venv_context(ctx):
-        ctx.run('pip3 install %s %s' % (' '.join(flags), ' '.join(package)))
+        ctx.run(f"pip3 install {' '.join(flags)} {' '.join(package)}")
 
 
 @task
@@ -90,4 +90,4 @@ def install_vcs(ctx, package, vcs_path):
         * git://github.com/idlesign/uwsgiconf@master
 
     """
-    install(ctx, 'git+%s#egg=%s' % (vcs_path, package), editable=True)
+    install(ctx, f'git+{vcs_path}#egg={package}', editable=True)

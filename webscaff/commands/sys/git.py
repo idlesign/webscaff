@@ -13,7 +13,7 @@ def clone(ctx, path_base, repo_url, dir_target):
         ctx.run('ssh -T git@github.com', warn=True)
 
     with ctx.cd(path_base):
-        ctx.run('git clone -v %s %s' % (repo_url, dir_target))
+        ctx.run(f'git clone -v {repo_url} {dir_target}')
 
 
 def pull(ctx, path_base):

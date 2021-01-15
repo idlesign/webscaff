@@ -4,12 +4,12 @@ from .fs import append_to_file
 def create(ctx, user):
     """Creates a user."""
     if get_id(ctx, user) is None:
-        ctx.sudo('useradd -s /bin/bash %s' % user)
+        ctx.sudo(f'useradd -s /bin/bash {user}')
 
 
 def add_sudoer(ctx, user):
     """Adds a user to sudoers."""
-    append_to_file(ctx, '/etc/sudoers', "'%s ALL=(ALL:ALL) ALL'" % user)
+    append_to_file(ctx, '/etc/sudoers', f"'{user} ALL=(ALL:ALL) ALL'")
 
 
 def add_to_group(ctx, user, group):
@@ -18,14 +18,15 @@ def add_to_group(ctx, user, group):
     Returns ``True`` if is just added (not already was there).
 
     :rtype: bool
+
     """
-    result = ctx.sudo('adduser %s %s' % (user, group)).stdout.strip()
+    result = ctx.sudo(f'adduser {user} {group}').stdout.strip()
     return 'Adding' in result
 
 
 def get_id(ctx, user):
     """Returns user ID. Might be used to check whether user exists."""
-    result = ctx.sudo('id -u %s' % user, warn=True).stdout.strip()
+    result = ctx.sudo(f'id -u {user}', warn=True).stdout.strip()
     result = int(result) if result.isdigit() else None
 
     return result

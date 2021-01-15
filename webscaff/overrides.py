@@ -52,7 +52,7 @@ class WebscaffConfig(Config):
         paths = self.paths.remote.project
 
         if not paths.home:
-            paths.home = '%s/%s' % (self.paths.remote.projects, project_name)
+            paths.home = f'{self.paths.remote.projects}/{project_name}'
 
         home_remote = Path(paths.home)
 

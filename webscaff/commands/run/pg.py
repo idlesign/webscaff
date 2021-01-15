@@ -37,9 +37,10 @@ def psql(ctx, command=None):
     command = command or ''
 
     if command:
-        command = ' -%s "%s"' % ('f' if '/' in command else 'c', command)
+        opt = 'f' if '/' in command else 'c'
+        command = f' -{opt} "{command}"'
 
-    ctx.sudo('psql%s' % command, user=ctx.project.user)
+    ctx.sudo(f'psql{command}', user=ctx.project.user)
 
 
 @task
@@ -92,4 +93,4 @@ def reindex(ctx, table):
     :param str table: Table name
 
     """
-    psql(ctx, 'REINDEX TABLE %s' % table)
+    psql(ctx, f'REINDEX TABLE {table}')

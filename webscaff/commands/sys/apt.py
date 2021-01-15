@@ -56,7 +56,7 @@ def install(ctx, packages):
 
     update(ctx)
 
-    ctx.sudo('apt install -y %s' % ' '.join(packages), env={'DEBIAN_FRONTEND': 'noninteractive'})
+    ctx.sudo(f"apt install -y {' '.join(packages)}", env={'DEBIAN_FRONTEND': 'noninteractive'})
 
 
 def bootstrap(ctx):

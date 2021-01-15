@@ -14,4 +14,4 @@ def create(ctx, python_path, venv_dir):
         return
 
     # Call as module in case `virtualenv` app is not [yet] available.
-    ctx.run('%s -m venv %s' % (python_path, venv_dir))
+    ctx.run(f'{python_path} -m venv {venv_dir}')
