@@ -71,7 +71,7 @@ Webscaff offers a number of useful command, among them:
     $ webscaff run.backup
 
 
-More command are available.
+More commands are available.
 
 Detailed instructions could be found in the documentation.
 
