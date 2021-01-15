@@ -16,12 +16,20 @@ def create_environ_file(ctx, type_marker='production'):
     sys_fs.append_to_file(ctx, ctx.paths.remote.project.state.environ, type_marker)
 
 
+def linksdir_get(ctx):
+    """Get project links dir in user's home."""
+    return f'~/{ctx.project.name}'
+
+
+def linksdir_create(ctx):
+    """Create project links dir in user's home."""
+    sys_fs.mkdir(ctx, linksdir_get(ctx), sudo=False)
+
+
 def symlink_home(ctx):
     """Create a directory with project-related symlinks in user's home."""
 
-    home_linkroot = f'~/{ctx.project.name}'
-
-    sys_fs.mkdir(ctx, home_linkroot)
+    home_linkroot = linksdir_get(ctx)
 
     dir_map = [
         (ctx.paths.remote.project.home, 'code'),

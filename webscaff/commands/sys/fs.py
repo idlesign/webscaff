@@ -49,9 +49,10 @@ def make_tmp_file(ctx, contents):
     return fpath
 
 
-def mkdir(ctx, path):
+def mkdir(ctx, path, sudo=True):
     """Creates a directory."""
-    ctx.sudo(f'mkdir -p {path}')
+    method = ctx.sudo if sudo else ctx.run
+    method(f'mkdir -p {path}')
 
 
 def chmod(ctx, path, mode):

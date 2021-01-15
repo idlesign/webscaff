@@ -2,6 +2,11 @@ webscaff changelog
 ==================
 
 
+Unreleased
+----------
+* Fix 'run.initialize' command permission error.
+
+
 v0.3.0 [2021-01-15]
 -------------------
 + New 'cfg' command.

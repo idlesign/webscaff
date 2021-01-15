@@ -33,7 +33,9 @@ def bootstrap(ctx):
         echo(' * Initial preparation is done. Please rerun the command to proceed.')
         return
 
-    path_log = ctx.paths.remote.project.state.bootstrap
+    fs.linksdir_create(ctx)
+
+    path_log = f'{fs.linksdir_get(ctx)}/bootstrap'
     append = partial(sys_fs.append_to_file, ctx, path_log)
     append('')  # Initialize file.
 

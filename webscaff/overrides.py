@@ -130,7 +130,6 @@ class WebscaffConfig(Config):
                             'reloader': None,  # uWSGI touch reload file
                             'maintenance': None,  # uWSGI maintenance trigger file
                             'environ': None,  # Project environ type file
-                            'bootstrap': None,  # Boostrap stage log file
                         },
                         'venv': {
                             'root': None,
