@@ -2,6 +2,11 @@ webscaff changelog
 ==================
 
 
+Unreleased
+----------
+* Enhance 'run.initialize' command: save progress to be able to resume.
+
+
 v0.2.1 [2020-10-12]
 -------------------
 * Workaround patchwork issue: invoke.vendor.six.

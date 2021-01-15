@@ -1,9 +1,9 @@
 import json
-
-from uuid import uuid4
 from datetime import datetime
+from functools import partial
 from os import makedirs
 from pathlib import Path
+from uuid import uuid4
 
 from . import fs, dj, service, uwsgi, venv, git, certbot, pg
 from ..sys import usr, apt, utils as sys_utils, fs as sys_fs
@@ -23,7 +23,6 @@ def cfg(ctx):
 
 def bootstrap(ctx):
     """Initializes a remote for your project."""
-
     project = ctx.project
     me = usr.whoami(ctx)
 
@@ -34,16 +33,41 @@ def bootstrap(ctx):
         echo(' * Initial preparation is done. Please rerun the command to proceed.')
         return
 
-    apt.bootstrap(ctx)
-    fs.bootstrap(ctx)
-    git.bootstrap(ctx)
-    fs.upload_configs(ctx)
-    venv.bootstrap(ctx)
-    pg.bootstrap(ctx)
-    dj.bootstrap(ctx)
-    uwsgi.bootstrap(ctx)
-    service.bootstrap(ctx)
-    certbot.bootstrap(ctx)
+    path_log = ctx.paths.remote.project.state.bootstrap
+    append = partial(sys_fs.append_to_file, ctx, path_log)
+    append('')  # Initialize file.
+
+    steps = {
+        'apt': apt.bootstrap,
+        'paths': fs.bootstrap,
+        'git': git.bootstrap,
+        'configs': fs.upload_configs,
+        'venv': venv.bootstrap,
+        'pg': pg.bootstrap,
+        'django': dj.bootstrap,
+        'uwsgi': uwsgi.bootstrap,
+        'service': service.bootstrap,
+        'certbot': certbot.bootstrap,
+    }
+    steps_total = len(steps)
+
+    steps_done = []
+
+    for line in sys_fs.cat(ctx, path_log, printout=False).splitlines():
+        line.strip()
+        line and steps_done.append(line)
+
+    for idx, (step_alias, step_func) in enumerate(steps.items(), 1):
+
+        msg = f'* Step {idx}/{steps_total}: {step_alias}'
+
+        if step_alias in steps_done:
+            echo(f'{msg} already done. Skip.')
+
+        else:
+            echo(f'{msg} ...')
+            step_func(ctx)
+            append(step_alias)
 
     echo('* Done. Reboot now ...')
 
