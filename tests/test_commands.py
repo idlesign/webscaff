@@ -155,6 +155,7 @@ class TestProj:
             'shutdown -r now'
         ]
 
+
 class TestSys:
 
     def test_info(self, run_command_mock):
@@ -165,3 +166,7 @@ class TestSys:
     def test_reboot(self, run_command_mock):
 
         assert run_command_mock('sys.utils.reboot') == ['shutdown -r now']
+
+    def test_upgrade(self, run_command_mock):
+
+        assert run_command_mock('sys.apt.upgrade') == ['apt-get update', 'apt-get upgrade']

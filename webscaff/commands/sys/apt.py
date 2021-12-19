@@ -32,9 +32,10 @@ def configure(ctx):
     ctx.sudo('dpkg --configure -a', env={'DEBIAN_FRONTEND': 'noninteractive'})
 
 
+@task
 def upgrade(ctx):
     """Initiates remote OS upgrade procedure."""
-    update()
+    update(ctx)
     ctx.sudo('apt-get upgrade')
 
 
