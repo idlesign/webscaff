@@ -34,15 +34,15 @@ def configure(ctx):
 
 @task
 def upgrade(ctx):
-    """Initiates remote OS upgrade procedure."""
+    """Initiates packages upgrade procedure."""
     update(ctx)
-    ctx.sudo('apt-get upgrade')
+    ctx.sudo('apt upgrade')
 
 
 @task
 def update(ctx):
     """Initiates apt cache update."""
-    ctx.sudo('apt-get update')
+    ctx.sudo('apt update')
 
 
 @task
