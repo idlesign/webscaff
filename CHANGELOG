@@ -2,6 +2,11 @@ webscaff changelog
 ==================
 
 
+Unreleased
+----------
++ Added 'sys.apt.autoremove' command.
+
+
 v0.3.2 [2021-12-19]
 -------------------
 * Enabled sys.apt.upgrade command.

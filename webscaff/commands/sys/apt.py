@@ -33,10 +33,23 @@ def configure(ctx):
 
 
 @task
-def upgrade(ctx):
-    """Initiates packages upgrade procedure."""
+def upgrade(ctx, purge=False):
+    """Initiates packages upgrade procedure.
+
+    :param purge: Allows to purge unused packages.
+
+    """
     update(ctx)
     ctx.sudo('apt upgrade')
+
+    if purge:
+        autoremove(ctx)
+
+
+@task
+def autoremove(ctx):
+    """Removes unused packages."""
+    ctx.sudo('apt autoremove')
 
 
 @task

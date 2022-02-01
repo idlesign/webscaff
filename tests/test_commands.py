@@ -54,7 +54,7 @@ class TestProj:
             'test -e "$(echo ~/mydemo/bootstrap)"',
             "echo '' >> ~/mydemo/bootstrap",
             'cat ~/mydemo/bootstrap',
-            'apt-get update',
+            'apt update',
             'apt install -y python3-dev python3-pip python3-venv python3-wheel '
             'build-essential libjpeg-dev libxml2-dev libxslt1-dev libpcre3-dev libssl-dev '
             'git postgresql libpq-dev certbot acl mc htop net-tools ncdu',
@@ -169,4 +169,8 @@ class TestSys:
 
     def test_upgrade(self, run_command_mock):
 
-        assert run_command_mock('sys.apt.upgrade') == ['apt-get update', 'apt-get upgrade']
+        assert run_command_mock('sys.apt.upgrade', '-p') == ['apt update', 'apt upgrade', 'apt autoremove']
+
+    def test_autoremove(self, run_command_mock):
+
+        assert run_command_mock('sys.apt.autoremove') == ['apt autoremove']
