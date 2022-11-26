@@ -4,6 +4,7 @@ webscaff changelog
 
 Unreleased
 ----------
++ Add 'sys.pg.cluster_upgrade' and 'sys.pg.cluster_drop' commands.
 + Add 'sys.utils.os-upgrade' command.
 + Added 'sys.apt.autoremove' command.
 * Exposed run.git.pull command.

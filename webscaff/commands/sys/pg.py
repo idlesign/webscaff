@@ -24,6 +24,23 @@ def reload(ctx):
     ctx.sudo('service postgresql reload')
 
 
+@task
+def cluster_upgrade(ctx, ver_old, ver_new=''):
+    """Upgrades PostgreSQL cluster (after OS upgrade for example)."""
+
+    if not ver_new:
+        ver_new = get_version(ctx)[0]
+
+    ctx.sudo(f'pg_dropcluster --stop {ver_new} main')
+    ctx.sudo(f'pg_upgradecluster {ver_old} main')
+
+
+@task
+def cluster_drop(ctx, ver):
+    """Drops PostgreSQL cluster (after cluster upgrade procedure for example)."""
+    ctx.sudo(f'pg_dropcluster {ver} main')
+
+
 def get_version(ctx):
     """Returns a list with PostgreSQL version number."""
     number = ctx.run('pg_config --version').stdout.strip()
