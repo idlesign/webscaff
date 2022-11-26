@@ -57,7 +57,7 @@ class TestProj:
             'apt update',
             'apt install -y python3-dev python3-pip python3-venv python3-wheel '
             'build-essential libjpeg-dev libxml2-dev libxslt1-dev libpcre3-dev libssl-dev '
-            'git postgresql libpq-dev certbot acl mc htop net-tools ncdu',
+            'git postgresql libpq-dev certbot acl mc htop net-tools ncdu screen',
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'egrep "^apt$" "~/mydemo/bootstrap"',
@@ -97,6 +97,9 @@ class TestProj:
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'egrep "^configs$" "~/mydemo/bootstrap"',
             'test -e "$(echo /srv/mydemo/venv)"',
+            'cd /srv/mydemo',
+            'git reset --hard',
+            'git pull origin master',
             'cd /srv/mydemo',
             'pip3 install -e .',
             'pip3 install  wheel',
