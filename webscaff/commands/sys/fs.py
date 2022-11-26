@@ -108,7 +108,7 @@ def gzip_extract(ctx, archive, target_dir=None, do_sudo=False):
 
 
 def gzip_dir(ctx, src, target_fname, do_sudo=False):
-    """GZips a directory."""
+    """GZips a remote directory."""
     target_fname = str(target_fname)
 
     arch_ext = '.tar.gz'
@@ -130,7 +130,7 @@ def gzip_dir(ctx, src, target_fname, do_sudo=False):
 @task
 def tail(ctx, filepath):
     """Tails a file to output."""
-    # todo maybe use a more powerful tail from orchestra
+    # todo maybe use a more powerful tail from baf
     ctx.sudo(f'tail -f {filepath}')
 
 

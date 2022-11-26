@@ -6,8 +6,12 @@ from pathlib import Path
 from uuid import uuid4
 
 from . import fs, dj, service, uwsgi, venv, git, certbot, pg
+from .venv import PIP_REQUIREMENTS_FILENAME
 from ..sys import usr, apt, utils as sys_utils, fs as sys_fs
-from ..utils import echo
+from ..utils import echo, rsync
+
+
+# todo maybe use an ssh command from baf
 
 
 def cfg(ctx):
@@ -76,16 +80,37 @@ def bootstrap(ctx):
     sys_utils.reboot(ctx)
 
 
-def rollout(ctx, upgrade_venv=False):
-    """Updates remote files from remote repository and rolls out project.
+def rollout(ctx, upgrade_venv=False, from_local=False):
+    """Updates remote files from remote repository or a local copy and rolls out the project.
 
     :param ctx:
     :param upgrade_venv: Whether to update venv using requirements file.
+    :param from_local: Rollout from a local filesystem instead of a remote repo.
 
     """
-    git.pull(ctx)
+    if from_local:
+        rsync(
+            ctx,
+            f'{ctx.paths.local.project.base}/',
+            ctx.paths.remote.project.base,
+            exclude=[
+                '*.pyc',
+                '__pycache__',
+            ],
+        )
+
+    else:
+        git.pull(ctx)
 
     if upgrade_venv:
+
+        if from_local:
+            # put requirements.txt to remote
+            ctx.put(
+                f'{Path(ctx.paths.local.project.home) / PIP_REQUIREMENTS_FILENAME}',
+                f'{Path(ctx.paths.remote.project.home) / PIP_REQUIREMENTS_FILENAME}'
+            )
+
         venv.upgrade(ctx)
 
     dj.rollout(ctx)

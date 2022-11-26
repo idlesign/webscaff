@@ -8,6 +8,7 @@ Unreleased
 + Add 'sys.utils.os-upgrade' command.
 + Add 'sys.utils.screen' command.
 + Added 'sys.apt.autoremove' command.
++ Command 'rollout' now supports '--from-local' option.
 * Exposed run.git.pull command.
 
 
