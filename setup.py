@@ -44,6 +44,7 @@ setup(
         'fabric>=2',
         'invoke>=1.4.1',  # workaround https://github.com/fabric/patchwork/issues/41
         'patchwork>=1.0.1',
+        'paramiko>=2.12.0',
     ],
     setup_requires=[] + (['pytest-runner'] if 'test' in sys.argv else []) + [],
 
