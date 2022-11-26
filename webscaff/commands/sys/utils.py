@@ -3,6 +3,9 @@ from invoke import task
 from ..utils import echo
 
 
+ENV_NON_INTERACTIVE = {'DEBIAN_FRONTEND': 'noninteractive'}
+
+
 @task
 def reboot(ctx):
     """Reboots remote immediately."""
@@ -12,7 +15,14 @@ def reboot(ctx):
 @task
 def os_upgrade(ctx):
     """Initiates OS upgrade."""
+    ctx.sudo('apt install screen')  # in case not installed
     ctx.sudo('do-release-upgrade')
+
+
+@task
+def screen(ctx):
+    """Restore screen session."""
+    ctx.sudo('screen -x')
 
 
 def set_locale(ctx, locale='ru_RU'):
