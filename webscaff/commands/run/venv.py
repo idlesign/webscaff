@@ -3,7 +3,7 @@ from pathlib import Path
 
 from invoke import task
 
-from ..sys import venv
+from ..sys import venv, git
 from ..utils import get_symlink_command
 
 
@@ -17,6 +17,10 @@ def bootstrap(ctx):
         ctx,
         python_path=ctx.python,
         venv_dir=ctx.paths.remote.project.venv.root)
+
+    # in case this bootstrap step has failed before
+    # because of a requirement, which was updated consequently in the repo
+    git.pull(ctx, ctx.paths.remote.repo)
 
     with ctx.cd(ctx.paths.remote.project.home):
         install(ctx, package='.', editable=True)
