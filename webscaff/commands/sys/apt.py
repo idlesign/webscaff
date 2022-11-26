@@ -1,5 +1,7 @@
 from invoke import task
 
+from .utils import ENV_NON_INTERACTIVE
+
 
 BOOTSTRAP_SYSTEM_PACKAGES = [
     'python3-dev',
@@ -23,9 +25,8 @@ BOOTSTRAP_SYSTEM_PACKAGES = [
     'htop',
     'net-tools',
     'ncdu',
+    'screen',
 ]
-
-ENV_NON_INTERACTIVE = {'DEBIAN_FRONTEND': 'noninteractive'}
 
 
 @task
@@ -72,7 +73,7 @@ def install(ctx, packages):
 
     update(ctx)
 
-    ctx.sudo(f"apt install -y {' '.join(packages)}", env={'DEBIAN_FRONTEND': 'noninteractive'})
+    ctx.sudo(f"apt install -y {' '.join(packages)}", env=ENV_NON_INTERACTIVE)
 
 
 def bootstrap(ctx):
