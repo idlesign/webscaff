@@ -41,8 +41,8 @@ setup(
     zip_safe=False,
 
     install_requires=[
-        'fabric>=2',
-        'invoke>=1.4.1',  # workaround https://github.com/fabric/patchwork/issues/41
+        'fabric>=2.7.1',
+        'invoke>=1.7.3',
         'patchwork>=1.0.1',
         'paramiko>=2.12.0',
     ],
