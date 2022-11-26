@@ -9,6 +9,12 @@ def reboot(ctx):
     ctx.sudo('shutdown -r now')
 
 
+@task
+def os_upgrade(ctx):
+    """Initiates OS upgrade."""
+    ctx.sudo('do-release-upgrade')
+
+
 def set_locale(ctx, locale='ru_RU'):
     """Generates and sets given UTF-8 locale.
 

@@ -4,6 +4,7 @@ webscaff changelog
 
 Unreleased
 ----------
++ Add 'sys.utils.os-upgrade' command.
 + Added 'sys.apt.autoremove' command.
 * Exposed run.git.pull command.
 

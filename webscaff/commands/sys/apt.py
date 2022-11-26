@@ -25,11 +25,13 @@ BOOTSTRAP_SYSTEM_PACKAGES = [
     'ncdu',
 ]
 
+ENV_NON_INTERACTIVE = {'DEBIAN_FRONTEND': 'noninteractive'}
+
 
 @task
 def configure(ctx):
     """Continues configuring using dpkg"""
-    ctx.sudo('dpkg --configure -a', env={'DEBIAN_FRONTEND': 'noninteractive'})
+    ctx.sudo('dpkg --configure -a', env=ENV_NON_INTERACTIVE)
 
 
 @task
