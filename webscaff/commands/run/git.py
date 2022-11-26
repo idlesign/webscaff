@@ -16,7 +16,11 @@ def bootstrap(ctx):
             ctx,
             path_base=ctx.paths.remote.project.home,
             repo_url=project.repo,
-            dir_target='.')
+            dir_target='.'
+        )
+
+        # hmm, consider this dir safe for the user
+        ctx.run("git config --global --add safe.directory '*'")
 
 
 @task
