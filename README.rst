@@ -23,7 +23,7 @@ Description
 Used stack
 ~~~~~~~~~~
 
-* **Debian**-based OS (Ubuntu 18.04, 20.04 tested) as a basis.
+* **Debian**-based OS (Ubuntu 18.04, 20.04, 22.04 tested) as a basis.
 * **Git** for source code updates.
 * **Systemd** to securely run your webservice.
 * **PostgreSQL** as a reliable DBMS.
