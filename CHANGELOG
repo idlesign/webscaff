@@ -2,8 +2,8 @@ webscaff changelog
 ==================
 
 
-Unreleased
-----------
+v1.0.0 [2022-11-27]
+-------------------
 + Add 'sys.pg.cluster_upgrade' and 'sys.pg.cluster_drop' commands.
 + Add 'sys.utils.os-upgrade' command.
 + Add 'sys.utils.screen' command.
