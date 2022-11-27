@@ -9,6 +9,7 @@ Unreleased
 + Add 'sys.utils.screen' command.
 + Added 'sys.apt.autoremove' command.
 + Command 'rollout' now supports '--from-local' option.
++ New command 'run.venv.populate'.
 * Exposed run.git.pull command.
 
 

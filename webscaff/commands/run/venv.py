@@ -22,12 +22,28 @@ def bootstrap(ctx):
     # because of a requirement, which was updated consequently in the repo
     git.pull(ctx, ctx.paths.remote.repo)
 
+    populate(ctx)
+
+    symlink_entypoint(ctx)
+
+
+@task
+def populate(ctx, reset_py=False):
+    """Populates venv with the requirements.
+    Can be useful af OS upgrades (with '--reset-py').
+
+    :param ctx:
+    :param reset_py: Allows an update of an interpreter used for the env,
+        pointing to a current system version.
+
+    """
+    if reset_py:
+        ctx.run(f'python3 -m venv --upgrade {ctx.paths.remote.project.venv.root}')
+
     with ctx.cd(ctx.paths.remote.project.home):
         install(ctx, package='.', editable=True)
         install(ctx, package='wheel')
         install(ctx, from_req=True)
-
-    symlink_entypoint(ctx)
 
 
 def symlink_entypoint(ctx):
