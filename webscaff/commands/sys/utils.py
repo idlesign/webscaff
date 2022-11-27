@@ -21,13 +21,13 @@ def os_upgrade(ctx):
     ctx.sudo('apt install screen')  # in case not installed
     ctx.sudo('apt upgrade')
 
-    ctx.sudo('do-release-upgrade')
+    ctx.sudo('do-release-upgrade', pty=True)
 
 
 @task
 def screen(ctx):
     """Restore screen session."""
-    ctx.sudo('screen -x')
+    ctx.sudo('screen -x', pty=True)
 
 
 def set_locale(ctx, locale='ru_RU'):
