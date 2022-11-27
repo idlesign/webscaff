@@ -17,7 +17,10 @@ def os_upgrade(ctx):
     """Initiates OS upgrade."""
     echo('NOTE: in case of a connection reset try using the sys.utils.screen command')
 
+    ctx.sudo('apt update')
     ctx.sudo('apt install screen')  # in case not installed
+    ctx.sudo('apt upgrade')
+
     ctx.sudo('do-release-upgrade')
 
 
