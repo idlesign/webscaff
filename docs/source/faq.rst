@@ -42,7 +42,7 @@ This roughly boils to:
 
 6. Upgrade virtual environment to use a new system Python version.
 
-   ``$ webscaff run.venv.repopulate``
+   ``$ webscaff run.venv.populate --reset-py``
 
 7. Restart your service.
 
