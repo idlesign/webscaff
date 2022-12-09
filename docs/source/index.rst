@@ -31,7 +31,7 @@ And also:
 Requirements
 ------------
 
-1. Python 3.6+
+1. Python 3.7+
 2. makeapp 1.3.0+ (to streamline project initialization)
 
 

@@ -6,6 +6,7 @@ Unreleased
 ----------
 + 'info' now show Linux distribution information.
 + 'rollout --from-local' now can handle symlinks.
+* Drop support for Python 3.6.
 * Use pseudoterminal for 'os-upgrade' and 'screen'.
 
 
