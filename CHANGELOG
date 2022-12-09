@@ -4,7 +4,8 @@ webscaff changelog
 
 Unreleased
 ----------
-+ 'rollout --from-loca' now can handle symlinks.
++ 'info' now show Linux distribution information.
++ 'rollout --from-local' now can handle symlinks.
 * Use pseudoterminal for 'os-upgrade' and 'screen'.
 
 
