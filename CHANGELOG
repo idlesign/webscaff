@@ -4,6 +4,7 @@ webscaff changelog
 
 Unreleased
 ----------
++ 'rollout --from-loca' now can handle symlinks.
 * Use pseudoterminal for 'os-upgrade' and 'screen'.
 
 

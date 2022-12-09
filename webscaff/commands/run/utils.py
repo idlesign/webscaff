@@ -97,6 +97,7 @@ def rollout(ctx, upgrade_venv=False, from_local=False):
                 '*.pyc',
                 '__pycache__',
             ],
+            rsync_opts='--copy-links',
         )
 
     else:
