@@ -164,7 +164,7 @@ class TestSys:
     def test_info(self, run_command_mock):
 
         assert run_command_mock('info') == [
-            'who', 'uname -a', 'cat /etc/timezone', 'uptime', 'df -h', 'journalctl --disk-usage']
+            'who', 'lsb_release -a', 'uname -a', 'cat /etc/timezone', 'uptime', 'df -h', 'journalctl --disk-usage']
 
     def test_reboot(self, run_command_mock):
 
