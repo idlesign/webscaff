@@ -1,17 +1,13 @@
-webscaff documentation
-======================
-https://github.com/idlesign/webscaff
+# Introduction
 
+<https://github.com/idlesign/webscaff>
 
-
-Description
------------
+# Description
 
 *Remote scaffolding and orchestration for web applications*
 
 
-Used stack
-~~~~~~~~~~
+## Used stack
 
 * **Debian**-based OS (Ubuntu 18.04, 20.04 tested) as a basis.
 * **Git** for source code updates.
@@ -27,20 +23,16 @@ And also:
 * SSH Agent forwarding for project code updates on remote using keys from your system.
 
 
-
-Requirements
-------------
+## Requirements
 
 1. Python 3.7+
 2. makeapp 1.3.0+ (to streamline project initialization)
 
+## Install
 
+```shell
+$ uv tool install webscaff
 
-Table of Contents
------------------
-
-.. toctree::
-    :maxdepth: 4
-
-    quickstart
-    faq
+; try it out
+$ webscaff
+```

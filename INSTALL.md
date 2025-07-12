@@ -6,7 +6,8 @@ https://docs.astral.sh/uv/getting-started/installation/
 ## From sources
 
 ```bash
-uv tool install --force -e .
+cd tools/
+./devboot.sh
 ```
 
 ## From PyPI
