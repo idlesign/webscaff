@@ -1,11 +1,11 @@
 import os
+from pathlib import Path
 
 import pytest
 from invoke.context import Context
 from invoke.executor import Executor
 
-
-if not os.getcwd().endswith('tests'):
+if Path.cwd().name != 'tests':
     # To run both from package root and tests/ subdir.
     os.chdir('tests/')
 
@@ -33,11 +33,11 @@ class MockContext(Context):
         return CommandResult(command)
 
     def cd(self, path):
-        context_commands.append('cd %s' % path)
+        context_commands.append(f'cd {path}')
         return super().cd(path)
 
     def put(self, what, where):
-        context_commands.append('put %s %s' % (what, where))
+        context_commands.append(f'put {what} {where}')
 
 
 class MockExecutor(Executor):
@@ -54,7 +54,7 @@ def run_command_mock(monkeypatch):
     monkeypatch.chdir('../demo')
     monkeypatch.setattr('webscaff.overrides.WebscaffExecutor', MockExecutor)
 
-    from webscaff.cli import program
+    from webscaff.cli import program  # noqa: PLC0415
 
     def run_command_mock_(command, *args):
         try:

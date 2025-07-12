@@ -2,7 +2,6 @@ from invoke import task
 
 from ..utils import echo
 
-
 ENV_NON_INTERACTIVE = {'DEBIAN_FRONTEND': 'noninteractive'}
 
 

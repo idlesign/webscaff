@@ -2,7 +2,6 @@ from invoke import task
 
 from .utils import ENV_NON_INTERACTIVE
 
-
 BOOTSTRAP_SYSTEM_PACKAGES = [
     'python3-dev',
     'python3-pip',

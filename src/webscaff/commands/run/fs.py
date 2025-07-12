@@ -3,7 +3,7 @@ from pathlib import Path
 from invoke import task
 
 from ..sys import fs as sys_fs
-from ..utils import get_symlink_command, rsync, echo
+from ..utils import echo, get_symlink_command, rsync
 
 
 def create_environ_file(ctx, type_marker='production'):

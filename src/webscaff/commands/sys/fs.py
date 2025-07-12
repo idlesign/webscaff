@@ -1,9 +1,10 @@
 from pathlib import Path
 from uuid import uuid4
+
 from invoke import task
 from patchwork.files import append, exists
 
-from ..utils import echo, cd_sudo
+from ..utils import cd_sudo, echo
 
 
 @task

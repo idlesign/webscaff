@@ -38,7 +38,9 @@ select = [
     "UP",  # py upgrade
 ]
 
-ignore = []
+ignore = [
+    "FBT002",
+]
 
 
 [lint.extend-per-file-ignores]

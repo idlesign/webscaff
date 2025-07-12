@@ -3,9 +3,8 @@ from pathlib import Path
 
 from invoke import task
 
-from ..sys import venv, git
+from ..sys import git, venv
 from ..utils import get_symlink_command
-
 
 PIP_REQUIREMENTS_FILENAME = 'requirements.txt'
 

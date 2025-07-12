@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from . import fs
 from ..sys import fs as sys_fs
 from ..utils import link_config
+from . import fs
 
 LETSENCRYPT_DIR = '/etc/letsencrypt'
 

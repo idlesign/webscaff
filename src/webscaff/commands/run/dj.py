@@ -2,9 +2,9 @@ from pathlib import Path
 
 from invoke import task
 
-from .fs import create_dir
 from ..sys import fs as sys_fs
-from ..utils import link_config, echo
+from ..utils import echo, link_config
+from .fs import create_dir
 
 
 @task
@@ -48,7 +48,7 @@ def create_superuser(ctx):
         username = email.partition('@')[0]
         command += f' --email {email} --username {username}'
 
-    echo('\nCreating Django superuser %s ...' % f'[{username}]' if username else '')
+    echo(f"\nCreating Django superuser [{username}] ...")
 
     manage(ctx, command)
 

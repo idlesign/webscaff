@@ -1,15 +1,15 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import partial
-from os import makedirs
 from pathlib import Path
 from uuid import uuid4
 
-from . import fs, dj, service, uwsgi, venv, git, certbot, pg
-from .venv import PIP_REQUIREMENTS_FILENAME
-from ..sys import usr, apt, utils as sys_utils, fs as sys_fs
+from ..sys import apt, usr
+from ..sys import fs as sys_fs
+from ..sys import utils as sys_utils
 from ..utils import echo, rsync
-
+from . import certbot, dj, fs, git, pg, service, uwsgi, venv
+from .venv import PIP_REQUIREMENTS_FILENAME
 
 # todo maybe use an ssh command from baf
 
@@ -123,10 +123,10 @@ def backup(ctx):
 
     path_dump_local = ctx.paths.local.project.state.dumps
 
-    makedirs(path_dump_local, exist_ok=True)
+    Path(path_dump_local).mkdir(parents=True, exist_ok=True)
 
     path_dumps = Path(ctx.paths.remote.project.state.dumps)
-    path_dump = path_dumps / f"{datetime.now().strftime('%Y-%m-%dT%H%M')}-{ctx.project.name}_dump"
+    path_dump = path_dumps / f"{datetime.now(tz=timezone.utc).strftime('%Y-%m-%dT%H%M')}-{ctx.project.name}_dump"
 
     # Create a subdirectory in dumps.
     sys_fs.mkdir(ctx, path_dump)
@@ -156,7 +156,7 @@ def restore(ctx, backup):
     backup = Path(backup).absolute()
 
     if not backup.exists():
-        echo("Backup file doesn't exist: %s" % backup)
+        echo(f"Backup file doesn't exist: {backup}")
         return
 
     path_dumps = Path(ctx.paths.remote.project.state.dumps)
@@ -183,7 +183,7 @@ def py(ctx, filepath):
     script = Path(filepath).absolute()
 
     if not script.exists():
-        echo("File doesn't exist: %s" % script)
+        echo(f"File doesn't exist: {script}")
         return
 
     path_temp = Path(ctx.paths.remote.temp)

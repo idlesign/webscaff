@@ -1,6 +1,5 @@
 import pytest
 
-
 from webscaff.overrides import WebscaffConfig
 
 
@@ -8,7 +7,7 @@ def test_defaults():
 
     config = WebscaffConfig()
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="project.name' setting"):
         config.check_required()
 
     config.project.name = 'testme'

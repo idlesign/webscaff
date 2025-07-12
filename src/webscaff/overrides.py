@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fabric.main import Fab, Executor, Config
+from fabric.main import Config, Executor, Fab
 from invoke.config import merge_dicts
 
 
@@ -17,7 +17,7 @@ class WebscaffConfig(Config):
 
         for setting_name in ('name', 'repo'):
             if not getattr(project, setting_name):
-                raise ValueError("Please provide a value for 'project.%s' setting." % setting_name)
+                raise ValueError(f"Please provide a value for 'project.{setting_name}' setting.")
 
     def contribute_missing(self):
 

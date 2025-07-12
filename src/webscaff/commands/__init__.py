@@ -1,10 +1,10 @@
+from ..utils import collection_from_sub
 from .run.log import stream
 from .run.service import restart, status
-from .run.utils import rollout, cfg
-from .run.uwsgi import reload_touch, on_503, off_503
-from .sys.utils import reboot, info
-from ..utils import collection_from_sub
-
+from .run.utils import cfg, rollout
+from .run.uwsgi import off_503, on_503, reload_touch
+from .sys.utils import info
+from .sys.utils import reboot as reboot
 
 ns = collection_from_sub(__file__, __name__)
 

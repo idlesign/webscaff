@@ -2,7 +2,8 @@ from textwrap import dedent
 
 from invoke import task
 
-from ..sys import pg as sys_pg, fs
+from ..sys import fs
+from ..sys import pg as sys_pg
 
 
 def bootstrap(ctx):
@@ -51,7 +52,7 @@ def sizes(ctx, limit=10):
     :param int limit: Show top n tables.
 
     """
-    command = '''
+    command = f'''
     SELECT
         name AS "Table",
         pg_size_pretty(size_data) AS "Size Data",
@@ -74,8 +75,8 @@ def sizes(ctx, limit=10):
         ) AS tables
         ORDER BY size_total DESC
 
-    ) AS pretty_sizes LIMIT %s;
-    ''' % limit
+    ) AS pretty_sizes LIMIT {limit};
+    '''
 
     command = fs.make_tmp_file(ctx, dedent(command))
 

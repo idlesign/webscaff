@@ -3,8 +3,8 @@ from pathlib import Path
 
 from invoke import task
 
-from .fs import tail, append_to_file
-from ..utils import link_config, echo
+from ..utils import echo, link_config
+from .fs import append_to_file, tail
 
 
 def stop(ctx):
