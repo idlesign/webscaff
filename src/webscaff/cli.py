@@ -1,6 +1,6 @@
 import warnings
 
-from . import VERSION_STR
+from . import VERSION
 from .commands import ns
 from .overrides import WebscaffProgram, WebscaffExecutor, WebscaffConfig
 
@@ -9,7 +9,7 @@ warnings.filterwarnings('ignore')  # filter out CryptographyDeprecationWarning a
 
 program = WebscaffProgram(
     name='Webscaff',
-    version=VERSION_STR,
+    version=VERSION,
     executor_class=WebscaffExecutor,
     config_class=WebscaffConfig,
     namespace=ns,

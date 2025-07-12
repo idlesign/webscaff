@@ -1,13 +1,11 @@
-webscaff changelog
-==================
+# webscaff changelog
 
 
-Unreleased
-----------
-+ 'info' now show Linux distribution information.
-+ 'rollout --from-local' now can handle symlinks.
-* Drop support for Python 3.6.
-* Use pseudoterminal for 'os-upgrade' and 'screen'.
+## Unreleased
+* ++ 'info' now show Linux distribution information.
+* ++ 'rollout --from-local' now can handle symlinks.
+* ** Drop support for Python 3.6.
+* ** Use pseudoterminal for 'os-upgrade' and 'screen'.
 
 
 v1.0.0 [2022-11-27]

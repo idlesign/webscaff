@@ -76,4 +76,4 @@ Detailed instructions could be found in the documentation.
 Documentation
 -------------
 
-http://webscaff.readthedocs.org/
+https://webscaff.readthedocs.io

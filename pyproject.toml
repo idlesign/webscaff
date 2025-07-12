@@ -1,0 +1,87 @@
+[project]
+name = "webscaff"
+dynamic = ["version"]
+description = "Remote scaffolding and orchestration for web applications"
+authors = [
+    { name = "Igor Starikov", email = "idlesign@yandex.ru" }
+]
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+requires-python = "~=3.10.18"  # patchwork is outdated as of 2025-07-12
+keywords = ["scaffolding", "development"]
+dependencies = [
+    "fabric==2.7.1",
+    "invoke==1.7.3",
+    "patchwork==1.0.1",
+    "paramiko==2.12.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/idlesign/webscaff"
+Documentation = "https://webscaff.readthedocs.io"
+
+[project.scripts]
+webscaff = "webscaff.cli:program.run"
+
+[dependency-groups]
+dev = [
+    {include-group = "docs"},
+    {include-group = "linters"},
+    {include-group = "tests"},
+]
+docs = [
+    "mkdocs-material",
+    "mkdocs-navsorted-plugin",
+]
+linters = [
+    "ruff",
+]
+tests = [
+    "pytest",
+    "freezegun",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/webscaff/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/webscaff"]
+
+[tool.hatch.build.targets.sdist]
+packages = ["src/"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+source = [
+    "src/",
+]
+omit = [
+]
+
+[tool.coverage.report]
+fail_under = 90.00
+exclude_also = [
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]
+
+[tool.tox]
+skip_missing_interpreters = true
+env_list = [
+  "py310",
+]
+
+[tool.tox.env_run_base]
+dependency_groups = ["tests"]
+commands = [
+  ["pytest", { replace = "posargs", default = ["tests"], extend = true }],
+]
