@@ -61,8 +61,9 @@ def chmod(ctx, path, mode):
     ctx.sudo(f'chmod {mode} {path}')
 
 
-def chown(ctx, path, user, group):
+def chown(ctx, path, user, group=None):
     """Sets owner for path contents recursively."""
+    group = group or user
     ctx.sudo(f'chown -R {user}:{group} {path}')
 
 

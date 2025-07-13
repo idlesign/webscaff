@@ -1,5 +1,6 @@
 from invoke import task
 
+from .fs import chown
 from .utils import ENV_NON_INTERACTIVE
 
 BOOTSTRAP_SYSTEM_PACKAGES = [
@@ -88,4 +89,4 @@ def uv_install(ctx):
 
     for cmd in ['uv', 'uvx']:
         ctx.sudo(f'mv ~/.local/bin/{cmd} /usr/bin/{cmd}')
-        ctx.sudo(f'chown root:root /usr/bin/{cmd}')
+        chown(ctx, f'/usr/bin/{cmd}', 'root')

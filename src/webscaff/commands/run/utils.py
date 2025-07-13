@@ -13,8 +13,6 @@ from .venv import FILENAME_LOCK, FILENAME_PYPROJECT
 
 # todo maybe use an ssh command from baf
 
-# todo fix unable to start via uv venv symlink - permission denied
-
 def cfg(ctx):
     """Prints out webscaff configuration."""
 
