@@ -63,7 +63,7 @@ class WebscaffConfig(Config):
             self.paths.remote.repo = paths.home
 
         if not paths.venv.root:
-            paths.venv.root = str(home_remote / 'venv')
+            paths.venv.root = str(home_remote / '.venv')
 
         if not paths.venv.bin:
             paths.venv.bin = str(Path(paths.venv.root) / 'bin')
@@ -95,8 +95,6 @@ class WebscaffConfig(Config):
             'forward_agent': True,  # Transparently access private VCS repos, etc.
 
             'tasks': {'collection_name': 'wscaffs'},
-
-            'python': 'python3',
 
             'dir_conf': 'conf',
 

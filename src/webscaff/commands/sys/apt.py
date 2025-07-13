@@ -25,6 +25,7 @@ BOOTSTRAP_SYSTEM_PACKAGES = [
     'net-tools',
     'ncdu',
     'screen',
+    'curl',
 ]
 
 
@@ -75,6 +76,16 @@ def install(ctx, packages):
     ctx.sudo(f"apt install -y {' '.join(packages)}", env=ENV_NON_INTERACTIVE)
 
 
+@task
 def bootstrap(ctx):
     """Bootstraps system by installing required packages."""
     install(ctx, BOOTSTRAP_SYSTEM_PACKAGES)
+    uv_install(ctx)
+
+
+def uv_install(ctx):
+    ctx.sudo("curl -LsSf https://astral.sh/uv/install.sh | sh")
+
+    for cmd in ['uv', 'uvx']:
+        ctx.sudo(f'mv ~/.local/bin/{cmd} /usr/bin/{cmd}')
+        ctx.sudo(f'chown root:root /usr/bin/{cmd}')

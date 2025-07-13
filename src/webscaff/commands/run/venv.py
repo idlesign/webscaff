@@ -1,51 +1,28 @@
 from contextlib import contextmanager
-from pathlib import Path
 
 from invoke import task
 
-from ..sys import git, venv
+from ..sys import git
 from ..utils import get_symlink_command
 
-PIP_REQUIREMENTS_FILENAME = 'requirements.txt'
+FILENAME_LOCK = 'uv.lock'
+FILENAME_PYPROJECT = 'pyproject.toml'
 
 
+@task
 def bootstrap(ctx):
     """Initializes a virtual environment for your project."""
-
-    venv.create(
-        ctx,
-        python_path=ctx.python,
-        venv_dir=ctx.paths.remote.project.venv.root)
 
     # in case this bootstrap step has failed before
     # because of a requirement, which was updated consequently in the repo
     git.pull(ctx, ctx.paths.remote.repo)
 
-    populate(ctx)
+    sync(ctx)
 
-    symlink_entypoint(ctx)
-
-
-@task
-def populate(ctx, reset_py=False):
-    """Populates venv with the requirements.
-    Can be useful af OS upgrades (with '--reset-py').
-
-    :param ctx:
-    :param reset_py: Allows an update of an interpreter used for the env,
-        pointing to a current system version.
-
-    """
-    if reset_py:
-        ctx.run(f'python3 -m venv --upgrade {ctx.paths.remote.project.venv.root}')
-
-    with ctx.cd(ctx.paths.remote.project.home):
-        install(ctx, package='.', editable=True)
-        install(ctx, package='wheel')
-        install(ctx, from_req=True)
+    symlink_entrypoint(ctx)
 
 
-def symlink_entypoint(ctx):
+def symlink_entrypoint(ctx):
     """Create a system-wide symlink to a project entrypoint."""
     project_name = ctx.project.name
     ctx.sudo(get_symlink_command(
@@ -63,7 +40,7 @@ def venv_context(ctx):
 
 @task
 def install(ctx, package='', update=False, from_req=False, editable=False):
-    """Installs python package(s) using pip
+    """Installs python package(s) using UV pip
 
     :param str|list package:
     :param bool update:
@@ -79,13 +56,13 @@ def install(ctx, package='', update=False, from_req=False, editable=False):
     editable and flags.append('-e')
 
     if from_req:
-        package = f'-r {Path(ctx.paths.remote.project.home) / PIP_REQUIREMENTS_FILENAME}'
+        sync(ctx)
+        return
 
     if not isinstance(package, list):
         package = [package]
 
-    with venv_context(ctx):
-        ctx.run(f"pip3 install {' '.join(flags)} {' '.join(package)}")
+    pip(ctx, f"install {' '.join(flags)} {' '.join(package)}")
 
 
 @task
@@ -100,7 +77,7 @@ def upgrade(ctx, package=''):
 
 @task
 def install_vcs(ctx, package, vcs_path):
-    """Installs python package(s) using pip from VCS
+    """Installs python package(s) from VCS
 
     :param str|list package: E.g.: sitetree
 
@@ -110,3 +87,27 @@ def install_vcs(ctx, package, vcs_path):
 
     """
     install(ctx, f'git+{vcs_path}#egg={package}', editable=True)
+
+
+@task
+def cmd(ctx, cmd):
+    """Runs the UV command.
+
+    :param cmd:
+    """
+    with ctx.cd(ctx.paths.remote.project.home):
+        ctx.run(f'uv {cmd}')
+
+
+@task
+def sync(ctx):
+    """Runs the UV sync command."""
+    cmd(ctx, 'sync --no-dev --locked')
+
+
+def pip(ctx, cmd):
+    """Runs the given UV pip command.
+
+    :param cmd:
+    """
+    cmd(ctx, f'pip {cmd}')

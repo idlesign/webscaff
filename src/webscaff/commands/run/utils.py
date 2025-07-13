@@ -9,10 +9,11 @@ from ..sys import fs as sys_fs
 from ..sys import utils as sys_utils
 from ..utils import echo, rsync
 from . import certbot, dj, fs, git, pg, service, uwsgi, venv
-from .venv import PIP_REQUIREMENTS_FILENAME
+from .venv import FILENAME_LOCK, FILENAME_PYPROJECT
 
 # todo maybe use an ssh command from baf
 
+# todo fix unable to start via uv venv symlink - permission denied
 
 def cfg(ctx):
     """Prints out webscaff configuration."""
@@ -106,11 +107,12 @@ def rollout(ctx, upgrade_venv=False, from_local=False):
     if upgrade_venv:
 
         if from_local:
-            # put requirements.txt to remote
-            ctx.put(
-                f'{Path(ctx.paths.local.project.home) / PIP_REQUIREMENTS_FILENAME}',
-                f'{Path(ctx.paths.remote.project.home) / PIP_REQUIREMENTS_FILENAME}'
-            )
+            # put requirements to remote
+            for filename in [FILENAME_PYPROJECT, FILENAME_LOCK]:
+                ctx.put(
+                    f'{Path(ctx.paths.local.project.home) / filename}',
+                    f'{Path(ctx.paths.remote.project.home) / filename}'
+                )
 
         venv.upgrade(ctx)
 

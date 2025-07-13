@@ -20,6 +20,7 @@ def restart(ctx):
 def status(ctx):
     """Returns project service status."""
     ctx.sudo(f'systemctl status {ctx.project.name}')
+    ctx.sudo(f'journalctl -xeu {ctx.project.name}.service')
 
 
 @task
