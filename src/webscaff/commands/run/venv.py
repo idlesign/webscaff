@@ -33,12 +33,12 @@ def create_venv(ctx):
     py_home = f'{home}/python'
     create_dir(ctx, py_home)
 
-    # todo workaround uwsgi: error while loading shared libraries:
-    #  libpython3.13.so.1.0: cannot open shared object file: No such file or directory
-
     with ctx.cd(home):
-        ctx.run(f'uv python install -i {py_home}')
-        ctx.run(f'UV_PYTHON_INSTALL_DIR={py_home} uv venv')
+        # todo managed python support workaround uwsgi: error while loading shared libraries:
+        #  libpython3.13.so.1.0: cannot open shared object file: No such file or directory
+        # ctx.run(f'uv python install -i {py_home}')
+        # ctx.run(f'UV_PYTHON_INSTALL_DIR={py_home} uv venv')
+        ctx.run('uv venv --python-preference system')
 
 
 def symlink_entrypoint(ctx):
@@ -115,7 +115,8 @@ def cmd(ctx, cmd):
     :param cmd:
     """
     with ctx.cd(ctx.paths.remote.project.home):
-        ctx.run(f'uv --managed-python --no-python-downloads {cmd}')
+        # todo ctx.run(f'uv --managed-python --no-python-downloads {cmd}')
+        ctx.run(f'uv {cmd}')
 
 
 @task
