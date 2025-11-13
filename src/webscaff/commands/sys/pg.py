@@ -52,8 +52,7 @@ def get_version(ctx):
 @task
 def log_main(ctx):
     """Tails main PostgreSQL log."""
-    version = [chunk for chunk in get_version(ctx)[:2] if int(chunk)]  # 9.4, but 10
-    tail(ctx, f"/var/log/postgresql/postgresql-{'.'.join(version)}-main.log")
+    tail(ctx, f"/var/log/postgresql/postgresql-{get_version(ctx)[0]}-main.log")
 
 
 def dump(ctx, db_name, target_dir, binary=True):
