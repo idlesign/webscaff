@@ -17,13 +17,13 @@ class TestProj:
 
             assert run_command_mock('run.backup') == [
                 'mkdir -p /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump',
-                'bash -c "cd /var/lib/mydemo/media && tar -czf /var/lib/mydemo/dumps/'
-                '2020-01-11T1155-mydemo_dump/media.tar.gz *"',
-                'bash -c "cd /etc/letsencrypt && tar -czf /var/lib/mydemo/dumps/'
-                '2020-01-11T1155-mydemo_dump/certbot.tar.gz *"',
+                ('bash -c "cd /var/lib/mydemo/media && tar -czf /var/lib/mydemo/dumps/'
+                '2020-01-11T1155-mydemo_dump/media.tar.gz *"'),
+                ('bash -c "cd /etc/letsencrypt && tar -czf /var/lib/mydemo/dumps/'
+                '2020-01-11T1155-mydemo_dump/certbot.tar.gz *"'),
                 'pg_dump -Fc mydemo > /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump/db.dump',
-                'bash -c "cd /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump && tar -czf /var/lib/mydemo/dumps/'
-                '2020-01-11T1155-mydemo_dump.tar.gz *"',
+                ('bash -c "cd /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump && tar -czf /var/lib/mydemo/dumps/'
+                '2020-01-11T1155-mydemo_dump.tar.gz *"'),
                 'rm -rf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump.tar.gz',
                 'rm -rf /var/lib/mydemo/dumps/2020-01-11T1155-mydemo_dump',
             ]
@@ -58,9 +58,14 @@ class TestProj:
             "echo '' >> ~/mydemo/bootstrap",
             'cat ~/mydemo/bootstrap',
             'apt update',
-            'apt install -y python3-dev python3-pip python3-venv python3-wheel '
+            ('apt install -y python3-dev python3-pip python3-venv python3-wheel '
             'build-essential libjpeg-dev libxml2-dev libxslt1-dev libpcre3-dev libssl-dev '
-            'git postgresql libpq-dev certbot acl mc htop net-tools ncdu screen',
+            'git postgresql libpq-dev certbot acl mc htop net-tools ncdu screen curl'),
+            'curl -LsSf https://astral.sh/uv/install.sh | sh',
+            'mv ~/.local/bin/uv /usr/bin/uv',
+            'chown -R root:root /usr/bin/uv',
+            'mv ~/.local/bin/uvx /usr/bin/uvx',
+            'chown -R root:root /usr/bin/uvx',
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'egrep "^apt$" "~/mydemo/bootstrap"',
@@ -99,15 +104,17 @@ class TestProj:
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'egrep "^configs$" "~/mydemo/bootstrap"',
-            'test -e "$(echo /srv/mydemo/venv)"',
             'cd /srv/mydemo',
             'git reset --hard',
             'git pull origin master',
+            'mkdir -p /srv/mydemo/python',
+            'chown -R mydemo:mydemo /srv/mydemo/python',
+            'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX,m:rwx" /srv/mydemo/python',
             'cd /srv/mydemo',
-            'pip3 install -e .',
-            'pip3 install  wheel',
-            'pip3 install  -r /srv/mydemo/requirements.txt',
-            'ln -sf /srv/mydemo/venv/bin/mydemo /usr/bin/mydemo',
+            'uv venv --python-preference system',
+            'cd /srv/mydemo',
+            'uv sync --no-dev --locked',
+            'ln -sf /srv/mydemo/.venv/bin/mydemo /usr/bin/mydemo',
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'test -e "$(echo ~/mydemo/bootstrap)"',
             'egrep "^venv$" "~/mydemo/bootstrap"',
@@ -125,8 +132,8 @@ class TestProj:
             'mkdir -p /var/lib/mydemo/media',
             'chown -R mydemo:mydemo /var/lib/mydemo/media',
             'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX,m:rwx" /var/lib/mydemo/media',
-            'ln -sf /srv/mydemo/conf/env_production.py '
-            '/srv/mydemo/mydemo/settings/env_production.py',
+            ('ln -sf /srv/mydemo/conf/env_production.py '
+            '/srv/mydemo/mydemo/settings/env_production.py'),
             'mydemo migrate',
             'mydemo createsuperuser --email idlesign@some.com --username idlesign',
             'test -e "$(echo ~/mydemo/bootstrap)"',
@@ -147,10 +154,10 @@ class TestProj:
             'chown -R mydemo:mydemo /var/lib/mydemo/certbot',
             'setfacl -Rm "g:mydemo:rwX,d:g:mydemo:rwX,m:rwx" /var/lib/mydemo/certbot',
             'certbot',
-            'ln -sf /srv/mydemo/conf/mydemo-certbot-hook.sh '
-            '/etc/letsencrypt/renewal-hooks/deploy/mydemo',
-            'certbot --agree-tos --no-eff-email --email idlesign@some.com certonly '
-            '--webroot -d mydemo.here -w /var/lib/mydemo/certbot',
+            ('ln -sf /srv/mydemo/conf/mydemo-certbot-hook.sh '
+            '/etc/letsencrypt/renewal-hooks/deploy/mydemo'),
+            ('certbot --agree-tos --no-eff-email --email idlesign@some.com certonly '
+            '--webroot -d mydemo.here -w /var/lib/mydemo/certbot'),
             'setfacl -Rm "g:mydemo:--x" /etc/letsencrypt/archive/',
             'setfacl -Rm "g:mydemo:r-x" /etc/letsencrypt/archive/mydemo.here/',
             'setfacl -Rm "g:mydemo:--x" /etc/letsencrypt/live/',

@@ -36,8 +36,6 @@ def create_venv(ctx):
     with ctx.cd(home):
         # todo managed python support workaround uwsgi: error while loading shared libraries:
         #  libpython3.13.so.1.0: cannot open shared object file: No such file or directory
-        # ctx.run(f'uv python install -i {py_home}')
-        # ctx.run(f'UV_PYTHON_INSTALL_DIR={py_home} uv venv')
         ctx.run('uv venv --python-preference system')
 
 

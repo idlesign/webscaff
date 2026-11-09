@@ -19,7 +19,6 @@ def test_defaults():
 
     assert config.forward_agent
     assert config.tasks['collection_name'] == 'wscaffs'
-    assert config.python == 'python3'
     assert config.dir_conf == 'conf'
 
     project = config.project
@@ -41,8 +40,8 @@ def test_defaults():
 
     assert paths_remote.project.home == '/srv/testme'
     assert paths_remote.project.base == '/srv/testme/testme'
-    assert paths_remote.project.venv.root == '/srv/testme/venv'
-    assert paths_remote.project.venv.bin == '/srv/testme/venv/bin'
+    assert paths_remote.project.venv.root == '/srv/testme/.venv'
+    assert paths_remote.project.venv.bin == '/srv/testme/.venv/bin'
 
     remote_state = paths_remote.project.state
     assert remote_state.static == '/var/lib/testme/static'
